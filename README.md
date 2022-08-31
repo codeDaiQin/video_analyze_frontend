@@ -1,16 +1,65 @@
-# Vue 3 + TypeScript + Vite
+1. 熟悉整体开发流程（从 0 到 1，基础建设 到 打包上线）、打造精良项目（可以写在简历上）、不要将经历消耗在 样式方面、主要是功能、逻辑。
+2. 挑战新技术、而不是永远停留在 `vue2`
+3. 不做重复工作、拒绝重复的`crud`、`博客`、`电商`、`谷粒学院`
+4. 养成良好的学习习惯、不再是一味的`看视频`
+5. 学会对一个需求进行拆分，并能估算出工作量，写出排期表
+6. 变强 赚钱 买房
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 项目要求
 
-## Recommended IDE Setup
+- git 协作 开发完一模块要互相`review`代码
+- 必须使用`TypeScript` 有效减少 bug 数量
+- 必须 `文档先行，编码在后`
+- 即使交流、同步进度
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+## 主要模块 参考 bilibili 客户端
 
-## Type Support For `.vue` Imports in TS
+- [ ] 首页
+- [ ] 详情
+- [ ] 发布
+- [ ] 后台
+- [ ] 登陆
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+## 主要功能
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+- [ ] 大文件分片上传
+- [ ] 权限
+- [ ] 播放器
+- [ ] 视频预览
+- [ ] 评论
+      如果做完还可以 拓展内容
+- [ ] 弹幕
+- [ ] 微服务
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+## 相关文档
+
+###### 前端
+
+- [vite](https://cn.vitejs.dev/)
+
+###### 服务端
+
+- [nest](https://nestjs.bootcss.com/)
+- [jest](https://jestjs.io/zh-Hans/)
+- [graphql](https://graphql.cn/code/#javascript)
+
+
+## 开发流程
+
+使用 [pnpm](https://pnpm.io/zh/)包管理
+
+```shell
+# 安装依赖
+  pnpm i
+# 启动项目
+  pnpm run dev
+```
+
+## 提交流程
+
+每人创建一个分支 每开发完一个功能/模块 提交
+
+开发完一个功能 提pr 找其他人review代码
+
+提交规范 feat/fix: 功能描述
+例： feat: 单据自训练 开始训练弹窗
