@@ -1,16 +1,14 @@
 <template>
     <div class="login">
-        这里是登录页
+        请输入账户信息
         <div class="userInfo">
             <div>
-                <div>
-                    <span>账号</span>
-                    <input type="text" placeholder="请输入账号" v-model="user.account">
-                </div>
-                <div>
-                    <span>密码</span>
-                    <input type="password" placeholder="请输入密码" v-model="user.password">
-                </div>
+                <span>账号</span> |
+                <input type="text" placeholder="请输入账号" v-model="user.account">
+            </div>
+            <div>
+                <span>密码</span> |
+                <input type="password" placeholder="请输入密码" v-model="user.password">
             </div>
         </div>
         <div class="buttons">
@@ -50,10 +48,49 @@ function login() {
 
 <style scoped>
 .login {
+    margin: auto;
     background-color: white;
-    width: 820px;
+    width: 420px;
     border-radius: 8px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
+
+.userInfo {
+    margin: 10px auto;
+    width: 60%;
+    height: 100px;
+    text-align: center;
+    background-color: pink;
+    border-radius: 20px;
+    font-weight: lighter;
+}
+
+.userInfo div{
+    height: 50%;
+    margin: 0px auto;
+    text-align: center;
+    font-size: 24px;
+}
+
+.userInfo input{
+    width: 150px;
+    margin: auto;
+    border: 0px;
+    height: 100%;
+    text-align: left;
+    font-size: 20px;
+    padding: 0px;
+    background-color: pink;
+    outline: 0px;
+}
+
+.buttons {
+    height: 50px;
+}
+
 .button-login{
     background-color: skyblue;
 }
