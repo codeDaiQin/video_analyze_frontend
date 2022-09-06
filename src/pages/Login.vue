@@ -20,20 +20,27 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
+import { useRoute } from 'vue-router';
+import { router } from '../router';
+
+let route = useRoute()
+
 interface User {
     account : string,
     password : string
 }
 
 let user : User = reactive({
-    account : '',
+    account :  route.query.userAccount? route.query.userAccount as string : '',
     password : '',
 }) 
 
 function jumpRegister() {
-    //根据已有信息跳转至注册页面
-    console.log(user);
-
+    let location = {
+        name: "Register",
+        params: { userAccout: user.account },
+    }
+    router.push(location)
 }
 function login() {
     //核验信息代码段

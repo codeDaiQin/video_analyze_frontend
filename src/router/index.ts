@@ -15,12 +15,16 @@ const routes = [
         component: Helloworld
     },
     {
+        name: "Login",
         path: "/Login",
-        component: Login
+        component: Login,
+        props: true
     },
     {
-        path: "/Register",
-        component: Register
+        path: "/Register/:userAccout?",
+        name: "Register",
+        component: Register,
+        props: true
     },
 ]
 
