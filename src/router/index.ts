@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Helloworld from "../components/Helloworld.vue";
 import Login from "../pages/Login.vue";
 import Register from "../pages/Register.vue";
@@ -30,7 +30,6 @@ const routes = [
 
 //声明路由器并暴露
 export const router = createRouter({
-    history: createWebHistory(),
-    routes: routes
-})
-
+  history: createWebHistory(),
+  routes: routes,
+});
