@@ -22,6 +22,7 @@
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { router } from '../router';
+import { reqLogin } from "../interface/userInfo";
 
 let route = useRoute()
 
@@ -46,9 +47,9 @@ function login() {
     //核验信息代码段
 
     //根据结果返回登录结果或返回错误信息
-
+    let res =  reqLogin({userName:user.account, userPassword: user.password})
     //登陆成功保存Token代码段，并登录跳转
-    console.log("请求服务器核验信息，登陆成功")
+    // console.log(res)
 }
 
 </script>
