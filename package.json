@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "element-plus": "^2.2.16",
+    "swiper": "^8.3.2",
     "vue": "^3.2.37",
     "vue-router": "^4.0.0-beta.13"
   },
