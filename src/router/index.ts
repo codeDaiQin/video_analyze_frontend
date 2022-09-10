@@ -4,6 +4,7 @@ import Login from "../pages/Login.vue";
 import Register from "../pages/Register.vue";
 import Home from "../pages/Home.vue";
 import Research from "../pages/Research.vue";
+import Detail from "../pages/Detail.vue"
 
 //配置路由区域
 const routes = [
@@ -31,6 +32,13 @@ const routes = [
         path: "/Research",
         name: "Research",
         component: Research,
+        props: true
+    },
+
+    {
+        path: "/Detail",
+        name: "Detail",
+        component: Detail,
         props: true
     },
 

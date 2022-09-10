@@ -4,16 +4,16 @@
             <swiper 
             :slides-per-view="1" 
             :space-between="0" 
-            navigation 
+            navigation
             :pagination="{ clickable: true }"
-            @swiper="onSwiper" 
+            :autoplay= "{ delay: 3000 }" as AutoplayOptions
             @slideChange="onSlideChange">
                 <swiper-slide>Slide 1</swiper-slide>
                 <swiper-slide>Slide 2</swiper-slide>
                 <swiper-slide>Slide 3</swiper-slide>
             </swiper>
             <div class="recommend-list">
-                <div class="recommend-item-box" v-for="item in recommendList">
+                <div class="recommend-item-box" v-for="item in recommendList" @click="showDetail">
                     <div class="video-prepics"></div>
                     <div class="video-Info">
                         <div class="title"><span>内容</span></div>
@@ -27,18 +27,26 @@
 
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
-import { Navigation, Pagination } from 'swiper';
+import SwiperCore, { Scrollbar, Pagination, Navigation, Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import "swiper/css";
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { router } from '../router';
+SwiperCore.use( [Scrollbar, Pagination, Navigation, Autoplay] )
 
-const onSwiper = (swiper) => {
-    console.log(swiper);
-};
 const onSlideChange = () => {
     console.log('slide change');
 };
+
+function showDetail() {
+    let location = {
+        name : "Detail",
+        //data: params,  //传入播放资源的url
+        method: 'get'
+    }
+    router.push(location)
+}
 
 
 const recommendList: Ref<Array<string>> = ref(['1', '2', '3', '4', '5', '6'])
