@@ -18,7 +18,15 @@ export default defineConfig({
         changeOrigin: true,
       }
     }
-  }
+  },
+  // css: {
+  //   preprocessorOptions: {
+  //     less: {
+  //       charset: false,
+  //       additionalData:'import ""'
+  //     }
+  //   }
+  // }
 })
 
 

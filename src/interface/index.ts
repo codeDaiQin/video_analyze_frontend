@@ -22,7 +22,7 @@ requestUser.interceptors.response.use(
     return res.data
   },
   err => {
-    Promise.reject(err)
+    return Promise.reject(err)
   }
 )
 

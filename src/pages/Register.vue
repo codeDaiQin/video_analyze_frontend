@@ -61,12 +61,11 @@ let userInfo = reactive<UserInfo>({
     password: '',
     uid: '',
     code: '',
+    name:''
 })
 
 let passwordConfirm = ref<string>('')
-
 let alertMessage = ref<string>('')
-
 let check = ref<boolean>(false)
 let errInfo = ref<string>('')
 

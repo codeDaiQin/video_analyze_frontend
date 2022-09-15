@@ -21,17 +21,24 @@
 
         </div>
         <div class="right-entry">
-            <button @click="router.push('Login')">登录</button>
+            <button @click="router.push('Login')" v-if="showEntry && store.state.token">用户头像</button>
+            <button @click="router.push('Login')" v-if="showEntry && !store.state.token">登录</button>
             <button @click="router.push('Release')">发布</button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { store } from "../store";
+import { onMounted, provide, ref, watch } from 'vue';
 import { router } from '../router';
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const searchInput = ref('')
+const showEntry = ref<boolean>(true)
+provide('show', showEntry)
+
 
 function goResearch() {
     let location = {
@@ -43,10 +50,19 @@ function goResearch() {
     router.push(location)
 }
 
+watch(route,()=>{
+    showEntry.value = !(route.path.indexOf('Login') === 1)
+})
+
+onMounted(()=>{
+    console.log(route.path.indexOf('Login'));
+})
+
 </script>
 
 <style scoped>
 .header {
+    margin: 10px;
     top: 0;
     width: 100%;
     display: flex;
