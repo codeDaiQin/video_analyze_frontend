@@ -8,6 +8,7 @@
             :pagination="{ clickable: true }"
             :autoplay= "{ delay: 3000 }" as AutoplayOptions
             @slideChange="onSlideChange">
+            <!-- swiper 引入内容 -->
                 <swiper-slide>Slide 1</swiper-slide>
                 <swiper-slide>Slide 2</swiper-slide>
                 <swiper-slide>Slide 3</swiper-slide>

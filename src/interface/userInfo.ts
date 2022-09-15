@@ -1,26 +1,54 @@
 import { ListResponse, PaginationType, requestUser } from ".";
 
-// 商品基本信息
+// 用户请求的基本信息
 export type UserInfo = {
-    userName: string;
-    userPassword : string | number;
-    userId: string | number;
-    verify: string | number;//验证码
-  };
-  
-export type UserInfoRequest = Pick<UserInfo, "userName"> & Pick<UserInfo, "userPassword">;
+    email: string;
+    password: string | number;
+    uid: string | number;
+    code: string | number;//验证码
+};
 
-export const reqLogin = (config : UserInfoRequest) => {
-    // let params = new URLSearchParams()
-    // console.log(config.userName);
-    // params.append('phone',config.userName)
-    // params.append('password',config.userPassword as string)
-    // console.log(params);
-    
+export type UserRegisterRequest = Pick<UserInfo, "email"> & Pick<UserInfo, "code">;//用于注册的参数设置
+export interface UserRegisterResponse {code : string} //用于注册返回响应的参数设置
+export type UserCodeResponse = Pick<UserInfo, "code"> //用于注册返回验证码的响应的参数设置
+
+
+export type UserInfoRequest = Pick<UserInfo, "email"> & Pick<UserInfo, "password">;//用于登陆的参数设置
+
+export const reqLogin = async (config: UserInfoRequest) => {
     let result = requestUser({
-        url:"/user/passport/login",
-        method:'post',
-        data:{'phone':config.userName,'password' : config.userPassword as string}
+        url: "/v1/auth/login",
+        method: 'post',
+        data: { 'email': config.email, 'password': config.password as string }
     })
     return result
+}
+
+
+export const reqRegister =async (config:  UserRegisterRequest) => {
+    let result = await requestUser({
+        url: "/v1/auth/register",
+        method: 'post',
+        data: { 'email': config.email, 'code': config.code as string }
+    })
+    return result
+}
+
+export const reqHello = () => {
+    let result = requestUser({
+        url: "/v1",
+        method: 'post',
+        data: { 'name': 'string', 'age': 1 , 'role' : 'guest'}
+    })
+    return result
+}
+
+
+export const reqCode = async (email : Pick<UserInfo, "email"> | string) => {
+    //request<UserCodeResponse,any>第一个参数指定response的数据格式带有code，否则调用函数时会报没有携带code属性
+    let result = await requestUser.request<UserCodeResponse,any>({
+        url: `/v1/auth/code/${email}`,
+        method: 'get'
+    })
+    return result    
 }

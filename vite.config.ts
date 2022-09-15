@@ -8,7 +8,12 @@ export default defineConfig({
     proxy:{
       //测试代理配置，成功
       '/api':{
-        target:'http://gmall-h5-api.atguigu.cn',   
+        target:'http://localhost:3000',   
+        ws: true,     
+        changeOrigin: true,
+      },
+      '/static': {
+        target:'http://localhost:8080',   
         ws: true,     
         changeOrigin: true,
       }

@@ -1,8 +1,8 @@
 <template>
     <div class="header">
         <div class="left-entry">
-            <router-link to="/Home" class="entry-item">首页</router-link>
-            <router-link to="/HelloWorld" class="entry-item">HelloWorld</router-link>
+            <button @click="router.push('Home')"  class="entry-item">首页</button>
+            <button @click="router.push('HelloWorld')"  class="entry-item">HelloWorld</button>
         </div>
         <div class="center-search-container">
             <div class="center-search-bar">
@@ -21,7 +21,8 @@
 
         </div>
         <div class="right-entry">
-            <router-link to="/Login" class="entry-item">登录</router-link>
+            <button @click="router.push('Login')">登录</button>
+            <button @click="router.push('Release')">发布</button>
         </div>
     </div>
 </template>
@@ -41,6 +42,7 @@ function goResearch() {
     }
     router.push(location)
 }
+
 </script>
 
 <style scoped>
@@ -155,7 +157,9 @@ function goResearch() {
     padding: 2px;
 }
 
-.entry-item {
-    margin: 5px;
+.right-entry button {
+    background-color: pink;
+    margin: 1px;
+    border: 1px black solid;
 }
 </style>
