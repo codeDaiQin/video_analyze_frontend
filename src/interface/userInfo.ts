@@ -1,4 +1,4 @@
-import { ListResponse, PaginationType, requestUser } from ".";
+import { ListResponse, PaginationType, requestAuth } from ".";
 
 // 用户请求的基本信息
 export type UserInfo = {
@@ -20,30 +20,29 @@ export type UserLoginResponse = { token : string;
 export type UserCodeResponse = Pick<UserInfo, "code"> //用于注册返回验证码的响应的参数设置
 
 
-export type UserInfoRequest = Pick<UserInfo, "email"> & Pick<UserInfo, "password">;//用于登陆的参数设置
+export type UserInfoRequest = Pick<UserInfo, "email"> & Pick<UserInfo, "password">;//用于获取用户信息的参数设置
 
 export const reqLogin = async (config: UserInfoRequest) => {
-    let result = await requestUser.request<UserLoginResponse,any>({
-        url: "/v1/auth/login",
+    let result = await requestAuth.request<UserLoginResponse,any>({
+        url: "/login",
         method: 'post',
-        data: { 'email': config.email, 'password': config.password as string }
+        data: config
     })
     return result
 }
 
 
 export const reqRegister =async (config:  UserRegisterRequest) => {
-    let result = await requestUser.request<UserRegisterResponse,any>({
-        url: "/v1/auth/register",
+    let result = await requestAuth.request<UserRegisterResponse,any>({
+        url: "/register",
         method: 'post',
-        data: { 'email': config.email, 'code': config.code as string }
+        data: config
     })
     return result
 }
 
 export const reqHello = () => {
-    let result = requestUser({
-        url: "/v1",
+    let result = requestAuth({
         method: 'post',
         data: { 'name': 'string', 'age': 1 , 'role' : 'guest'}
     })
@@ -53,8 +52,8 @@ export const reqHello = () => {
 
 export const reqCode = async (email : Pick<UserInfo, "email"> | string) => {
     //request<UserCodeResponse,any>第一个参数指定response的数据格式带有code，否则调用函数时会报没有携带code属性
-    let result = await requestUser.request<UserCodeResponse,any>({
-        url: `/v1/auth/code/${email}`,
+    let result = await requestAuth.request<UserCodeResponse,any>({
+        url: `/code/${email}`,
         method: 'get'
     })
     return result    

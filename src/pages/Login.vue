@@ -1,9 +1,10 @@
 <template>
     <div class="login">
-        <div class="userDetail"></div>
+        <el-main  class="userDetail">
 
-        <div class="userInfo">
-            <div v-if="show">
+        </el-main>
+        <el-aside class="userInfo">
+            <div v-if="!store.state.token">
                 <div>
                     <input type="text" placeholder="请输入邮箱" v-model="user.email">
                 </div>
@@ -15,8 +16,7 @@
                     <button class="button-login" @click="login">登录</button>
                 </div>
             </div>
-        </div>
-
+        </el-aside>
     </div>
 </template>
 
@@ -40,20 +40,21 @@ let user: UserInfo = reactive({
 
 async function login() {
     //核验信息代码段
-    await reqRegister(user).then( 
-        res=> {
-            Object.assign(user,res)           
+    await reqRegister(user).then(
+        res => {
+            Object.assign(user, res)
         }
-    ).catch( 
+    ).catch(
         async err => {
-            if(err.response.data.message === '存在了哦') {
+            if (err.response.data.message === '用户已存在') {
                 let reslogin = await reqLogin(user)
-                Object.assign(user,reslogin.user)   
-                sessionStorage.setItem('token',reslogin.token) 
-                store.commit('setToken',reslogin.token)
+                Object.assign(user, reslogin.user)
+                console.log(reslogin);                
+                sessionStorage.setItem('token', reslogin.token)
+                store.commit('setToken', reslogin.token)
             }
-        }        
-    )        
+        }
+    )
 }
 
 async function getCode() {
@@ -64,7 +65,7 @@ async function getCode() {
         return alert('请输入合法邮箱')
     }
     let res = await reqCode(user.email)
-    user.code = res.code;    
+    user.code = res.code;
 }
 
 </script>
@@ -88,7 +89,7 @@ async function getCode() {
     .userInfo {
         flex: .2;
         margin: 10px auto;
-        max-width: 400px;
+        min-width: 250px;
         background-color: pink;
         border-radius: 20px;
         font-weight: lighter;
