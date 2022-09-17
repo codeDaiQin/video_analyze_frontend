@@ -1,7 +1,7 @@
 <template>
     <div>
         <input type="file" name="file-name" ref="file" @change="onChange($event)">
-        <button @click="releaseMyVideo">上传作品</button>
+        <button @click="upload">上传作品</button>
     </div>
 </template>
 
@@ -10,7 +10,7 @@
     
 //页面用于上传文件
 import { reactive } from 'vue';
-import { reqReleaseVideo } from "../interface/videoRelease";
+import { reqUploadVideo } from '../interface/video';
 
 let files : File[] = reactive([])
 
@@ -21,8 +21,9 @@ function onChange(e : Event) {
     }
 }
 
-function releaseMyVideo() {
-    reqReleaseVideo(files)
+async function upload() {
+    files
+    await reqUploadVideo()
 }
 
 </script>

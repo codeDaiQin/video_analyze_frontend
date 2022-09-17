@@ -1,18 +1,11 @@
 <template>
     <div>
         <div class="recommend">
-            <swiper 
-            :slides-per-view="1" 
-            :space-between="0" 
-            navigation
-            :pagination="{ clickable: true }"
-            :autoplay= "{ delay: 3000 }" as AutoplayOptions
-            @slideChange="onSlideChange">
-            <!-- swiper 引入内容 -->
-                <swiper-slide>Slide 1</swiper-slide>
-                <swiper-slide>Slide 2</swiper-slide>
-                <swiper-slide>Slide 3</swiper-slide>
-            </swiper>
+            <el-carousel :interval="2000" arrow="always" class="swiper">
+                <el-carousel-item>Slide 1</el-carousel-item>
+                <el-carousel-item>Slide 2</el-carousel-item>
+                <el-carousel-item>Slide 3</el-carousel-item>
+            </el-carousel>
             <div class="recommend-list">
                 <div class="recommend-item-box" v-for="item in recommendList" @click="showDetail">
                     <div class="video-prepics"></div>
@@ -28,17 +21,7 @@
 
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
-import SwiperCore, { Scrollbar, Pagination, Navigation, Autoplay } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import "swiper/css";
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import { router } from '../router';
-SwiperCore.use( [Scrollbar, Pagination, Navigation, Autoplay] )
-
-const onSlideChange = () => {
-    console.log('slide change');
-};
 
 function showDetail() {
     let location = {

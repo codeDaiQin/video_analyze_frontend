@@ -11,5 +11,9 @@ export const store = createStore({
         setToken(state,val) {
             state.token = val
         }
+    },
+
+    getters: {
+        Token: state => {return state.token}
     }
 })

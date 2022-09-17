@@ -2,13 +2,33 @@
 import Axios from "axios";
 
 //请求用户信息的接口
-export const requestAuth = Axios.create({
-  baseURL: "/api/v1/auth",
+export const myRequest = Axios.create({
+  baseURL: "/api/v1",
   timeout: 5000
 })
 
-requestAuth.interceptors.request.use(
+//请求拦截，根据api接口自动添加前缀
+function urlHelper(url: string): string {
+  const authReg = new RegExp('\/login|\/register|\/code|\/forgetPassWord')
+  const videoReg = new RegExp('\/upload')
+  const userReg = new RegExp('\/getUserDetail')
+  if (authReg.test(url)) {
+    return "/auth" + url
+  }
+  else if (videoReg.test(url)) {
+    return "/video" + url
+  }
+  else if (userReg.test(url)) {
+    return "/user" + url
+  }
+  else {
+    return url
+  }
+}
+
+myRequest.interceptors.request.use(
   config => {
+    config.url = urlHelper(config.url!)  
     return config
   },
   err => {
@@ -16,7 +36,7 @@ requestAuth.interceptors.request.use(
   }
 )
 
-requestAuth.interceptors.response.use(
+myRequest.interceptors.response.use(
   res => {
     return res.data
   },

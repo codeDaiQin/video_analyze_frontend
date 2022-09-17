@@ -43,7 +43,7 @@
 import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { router } from '../router'
-import { UserInfo, reqRegister, UserInfoRequest, reqCode, UserRegisterRequest} from '../interface/userInfo'
+import { UserInfo, reqRegister, UserInfoRequest, reqCode, UserRegisterRequest} from '../interface/auth'
 import { ElResult } from 'element-plus';
 
 
@@ -83,7 +83,7 @@ function findUser() {
 
 //发送验证码---此处应该封装请求，处理返回结果
 async function reqEmailCode() {
-    let result = await reqCode(userInfo.email)      
+    let result = await reqCode(userInfo)      
     userInfo.code = result.code
     
 }
@@ -132,7 +132,7 @@ function eraseErr() {
 </script>
 
 <style scoped>
-.form {
+/* .form {
     width: 100vh;
     margin: auto;
 }
@@ -211,5 +211,5 @@ button {
     justify-content: space-between;
     display: flex;
     flex-direction: row;
-}
+} */
 </style>

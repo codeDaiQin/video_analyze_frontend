@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { reqHello } from "../interface/userInfo";
+import {  ref } from 'vue'
 
 const msg = ref('')
 
 const count = ref(0)
-onMounted(() => {
-  reqHello()
-})
 
 </script>
 

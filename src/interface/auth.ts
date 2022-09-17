@@ -1,4 +1,4 @@
-import { ListResponse, PaginationType, requestAuth } from ".";
+import { ListResponse, PaginationType, myRequest } from ".";
 
 // 用户请求的基本信息
 export type UserInfo = {
@@ -23,7 +23,7 @@ export type UserCodeResponse = Pick<UserInfo, "code"> //用于注册返回验证
 export type UserInfoRequest = Pick<UserInfo, "email"> & Pick<UserInfo, "password">;//用于获取用户信息的参数设置
 
 export const reqLogin = async (config: UserInfoRequest) => {
-    let result = await requestAuth.request<UserLoginResponse,any>({
+    let result = await myRequest.request<UserLoginResponse,any>({
         url: "/login",
         method: 'post',
         data: config
@@ -33,7 +33,7 @@ export const reqLogin = async (config: UserInfoRequest) => {
 
 
 export const reqRegister =async (config:  UserRegisterRequest) => {
-    let result = await requestAuth.request<UserRegisterResponse,any>({
+    let result = await myRequest.request<UserRegisterResponse,any>({
         url: "/register",
         method: 'post',
         data: config
@@ -42,7 +42,7 @@ export const reqRegister =async (config:  UserRegisterRequest) => {
 }
 
 export const reqHello = () => {
-    let result = requestAuth({
+    let result = myRequest({
         method: 'post',
         data: { 'name': 'string', 'age': 1 , 'role' : 'guest'}
     })
@@ -50,11 +50,21 @@ export const reqHello = () => {
 }
 
 
-export const reqCode = async (email : Pick<UserInfo, "email"> | string) => {
+export const reqCode = async (config : Pick<UserInfo, "email">) => {
     //request<UserCodeResponse,any>第一个参数指定response的数据格式带有code，否则调用函数时会报没有携带code属性
-    let result = await requestAuth.request<UserCodeResponse,any>({
-        url: `/code/${email}`,
+    let result = await myRequest.request<UserCodeResponse,any>({
+        url: `/code/${config.email}`,
         method: 'get'
+    })
+    return result    
+}
+
+
+export const reqforgetPassWord = async (email : Pick<UserInfo, "email">) => {
+    //request<UserCodeResponse,any>第一个参数指定response的数据格式带有code，否则调用函数时会报没有携带code属性
+    let result = await myRequest.request<UserCodeResponse,any>({
+        url: '/forgetPassWord',
+        method: 'post'
     })
     return result    
 }

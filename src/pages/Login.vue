@@ -1,34 +1,44 @@
 <template>
-    <div class="login">
-        <el-main  class="userDetail">
-
-        </el-main>
-        <el-aside class="userInfo">
-            <div v-if="!store.state.token">
-                <div>
-                    <input type="text" placeholder="请输入邮箱" v-model="user.email">
-                </div>
-                <div>
-                    <input type="password" placeholder="密码/验证码" v-model="user.code">
-                    <button id="getCode" @click="getCode">获码</button>
-                </div>
-                <div class="buttons">
-                    <button class="button-login" @click="login">登录</button>
-                </div>
+    <div>
+        <div class="container">
+            <el-tabs type="card" class="elLoginTabs" @click="removeMssage">
+                <el-tab-pane label="密码">
+                    <div>
+                        <el-input type="text" placeholder="请输入邮箱" v-model="user.email" @change="testReg"></el-input>
+                    </div>
+                    <div class="passwordContainer">
+                        <el-input type="password" placeholder="密码" v-model="user.password"></el-input>
+                        <el-button @click="forget">忘记密码</el-button>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="验证码">
+                    <div>
+                        <el-input type="text" placeholder="请输入邮箱" v-model="user.email" @change="testReg"></el-input>
+                    </div>
+                    <div class="passwordContainer">
+                        <el-input type="code" placeholder="验证码" v-model="user.code"></el-input>
+                        <el-button @click="getCode">获取验证码</el-button>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
+            <div class="buttons">
+                <el-button class="button-login" @click="login">登录</el-button>
+                <el-button class="button-login" @click="register">注册</el-button>
+                <p>{{emailErr}}</p>
             </div>
-        </el-aside>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { inject, reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { store } from "../store";
-import { router } from '../router';
-import { reqLogin, reqRegister, reqCode, UserInfo } from "../interface/userInfo";
+import { reqLogin, reqRegister, reqCode, reqforgetPassWord, UserInfo } from "../interface/auth";
 
-let show = inject('show')
 let route = useRoute()
+let emailCheck = ref<boolean>(false)
+let emailErr = ref<string>('')
 
 let user: UserInfo = reactive({
     email: route.query.userAccount ? route.query.userAccount as string : '',
@@ -38,113 +48,84 @@ let user: UserInfo = reactive({
     name: null
 })
 
-async function login() {
-    //核验信息代码段
-    await reqRegister(user).then(
-        res => {
-            Object.assign(user, res)
-        }
-    ).catch(
-        async err => {
-            if (err.response.data.message === '用户已存在') {
-                let reslogin = await reqLogin(user)
-                Object.assign(user, reslogin.user)
-                console.log(reslogin);                
-                sessionStorage.setItem('token', reslogin.token)
-                store.commit('setToken', reslogin.token)
-            }
-        }
-    )
-}
-
-async function getCode() {
+//测试邮箱合法性
+function testReg() {
+    emailErr.value = ''
     //验证邮箱的正则表达式（重点掌握）
     let emailReg = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
     //邮箱未填写，或者不合法时终止方法
     if (!user.email || !emailReg.test(user.email)) {
-        return alert('请输入合法邮箱')
+        emailErr.value = '请输入合法邮箱'
+        return emailCheck.value = false
     }
-    let res = await reqCode(user.email)
-    user.code = res.code;
+    return emailCheck.value = true
+}
+
+//移除错误信息
+function removeMssage() {
+    emailErr.value = ''
+}
+
+//提取用户登录信息
+function assignUserInfo(res: Promise<UserInfo>) {
+
+}
+
+//请求
+async function register() {
+    //核验信息代码段
+    if (testReg()) {
+        await reqRegister(user).then(
+            res => {
+                Object.assign(user, res)
+            }
+        ).catch(
+            async err => {
+                if (err.response.data.message === '用户已存在') {
+                    let reslogin = await reqLogin(user)
+                    Object.assign(user, reslogin.user)
+                    sessionStorage.setItem('token', reslogin.token)
+                    store.commit('setToken', reslogin.token)
+                }
+            }
+        )
+    }
+}
+
+async function login() {
+    //核验信息代码段
+    if (testReg()) {
+        let res = await reqLogin(user)
+        Object.assign(user, res.user)
+        sessionStorage.setItem('token', res.token)
+        store.commit('setToken', res.token)
+    }
+}
+
+async function getCode() {
+    if (testReg()) {
+        let res = await reqCode(user)
+        user.code = res.code;
+    }
+}
+
+async function forget() {
+    if (testReg()) {
+        let res = await reqforgetPassWord(user)
+    }
 }
 
 </script>
 
-<style lang="less" scoped>
-.login {
-    margin: 10px auto;
-    background-color: white;
-    max-width: 1280px;
-    border-radius: 8px;
-    border: 1px solid black;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    .userDetail {
-        flex: .8;
-        height: 2000px;
+<style scoped>
+    .container {
+        position: relative;
+        max-width: 400px;
+        max-height: 300px;
+        border-radius: 10px;
+        background-color: aquamarine;
+        border: 1px solid black;
+        margin: auto;
+        
     }
-
-    .userInfo {
-        flex: .2;
-        margin: 10px auto;
-        min-width: 250px;
-        background-color: pink;
-        border-radius: 20px;
-        font-weight: lighter;
-        border: 1px black solid;
-        align-content: center;
-
-        >div {
-            margin: 3px 3px 0px 3px;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-
-            >div {
-                margin: 3px 3px 0px 3px;
-                height: 30px;
-                width: 100%;
-                font-size: 20px;
-                display: flex;
-                flex-wrap: wrap;
-                flex-direction: row;
-                justify-content: space-between;
-
-                #getCode {
-                    flex: 1;
-                    margin: 3px 3px 0px 3px;
-                    border: 1px solid black;
-                    height: 100%;
-                    font-size: 15px;
-                    inline-size: 30px;
-                }
-
-                input {
-                    flex: 1;
-                    width: 100px;
-                    margin: 3px 3px 0px 3px;
-                    border: 0px;
-                    height: 100%;
-                    font-size: 20px;
-                    padding: 0px;
-                    background-color: skyblue;
-                }
-
-            }
-        }
-
-
-
-        .buttons {
-            .button-login {
-                margin: 10px auto;
-                background-color: skyblue;
-            }
-        }
-
-    }
-
-}
 </style>
