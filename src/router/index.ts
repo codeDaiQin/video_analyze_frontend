@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Home from "../pages/Home.vue";
 import Helloworld from "../components/Helloworld.vue";
 import Auth from "../pages/Auth.vue";
 import Register from "../pages/Register.vue";
-import Home from "../pages/Home.vue";
 import Research from "../pages/Research.vue";
 import Detail from "../pages/Detail.vue"
 import Upload from "../pages/Upload.vue"
@@ -19,6 +19,7 @@ const routeLogin = {
 //配置路由区域
 const routes = [
     {
+        name:'Home',
         path: "/Home",
         component: Home
     },

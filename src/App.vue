@@ -5,12 +5,24 @@
 import Header from './components/Header.vue'
 import 'video.js/dist/video-js.min.css'
 
-
 </script>
 
 <template>
-  <Header />
-  <router-view></router-view>
+  <el-container>
+    <el-header height="80px">
+      <Header />
+    </el-header>
+    <el-container>
+      <el-container>
+        <el-main height="">
+          <router-view></router-view>
+        </el-main>
+        <el-footer height="">
+          <!-- Footer content -->
+        </el-footer>
+      </el-container>
+    </el-container>
+  </el-container>
 </template>
 
 <style scoped>
