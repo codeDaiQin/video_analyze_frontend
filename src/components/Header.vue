@@ -43,7 +43,7 @@ import Login from "../pages/Login.vue";
 
 const route = useRoute()
 const searchInput = ref('')
-const showEntry = ref<boolean>(true)
+const showEntry = ref(true)
 provide('show', showEntry)
 let isLogin = ref<boolean>(false)
 

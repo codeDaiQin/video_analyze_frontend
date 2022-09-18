@@ -42,9 +42,8 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { router } from '../router'
-import { UserInfo, reqRegister, UserInfoRequest, reqCode, UserRegisterRequest} from '../interface/auth'
-import { ElResult } from 'element-plus';
+import { reqRegister, reqCode} from '../service/auth'
+import { UserInfo, UserRegisterRequest} from "../interface/auth";
 
 
 const route = useRoute()
@@ -64,10 +63,10 @@ let userInfo = reactive<UserInfo>({
     name:''
 })
 
-let passwordConfirm = ref<string>('')
-let alertMessage = ref<string>('')
-let check = ref<boolean>(false)
-let errInfo = ref<string>('')
+let passwordConfirm = ref('')
+let alertMessage = ref('')
+let check = ref(false)
+let errInfo = ref('')
 
 //用户填写用户邮箱时进行检查用户名的注册情况（可注册/已注册/书写规范）
 function findUser() {

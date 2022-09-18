@@ -23,7 +23,7 @@
 import { Ref, ref } from 'vue';
 import { router } from '../router';
 import Card from '../pages/Card.vue'
-let cards = ref<string[]>(['1','2'])
+let cards = ref(['1','2'])
 
 function showDetail() {
     let location = {

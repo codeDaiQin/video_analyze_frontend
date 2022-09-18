@@ -3,7 +3,7 @@ import { createStore } from "vuex";
 export const store = createStore({
     state() {
         return {
-            token :''
+            token : ''
         }
     },
 
@@ -14,6 +14,6 @@ export const store = createStore({
     },
 
     getters: {
-        Token: state => {return state.token}
+        Token: state => state.token
     }
 })
