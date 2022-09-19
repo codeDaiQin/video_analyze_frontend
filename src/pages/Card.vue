@@ -68,7 +68,9 @@ const recommendList: Ref<Array<string>> = ref(['1', '2', '3', '4', '5', '6', '7'
 
     .recommend-item-box {
         aspect-ratio: 1.2/1;
+        border-radius: 10px;
         border: 1px solid black;
+        overflow: hidden;
 
         .video-prepics {
             aspect-ratio: 16/9;

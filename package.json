@@ -17,6 +17,7 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@types/video.js": "^7.3.48",
     "@vitejs/plugin-vue": "^3.0.3",
     "less": "^4.1.3",
     "less-loader": "^11.0.0",

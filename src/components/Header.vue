@@ -196,6 +196,6 @@ onMounted(() => {
 
 .Login {
     position: absolute;
-
+    transform: translate(-80%,0);
 }
 </style>
