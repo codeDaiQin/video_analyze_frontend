@@ -4,7 +4,10 @@ import Axios from "axios";
 //请求用户信息的接口
 export const myRequest = Axios.create({
   baseURL: "/api/v1",
-  timeout: 5000
+  timeout: 5000,
+  headers: {
+    token: ''
+  }
 })
 
 //请求拦截，根据api接口自动添加前缀
@@ -34,6 +37,9 @@ function urlHelper(url: string) {
 
 myRequest.interceptors.request.use(
   config => {
+    if (localStorage.getItem('token')) {
+      config.headers!.token = localStorage.getItem('token') as string
+    }
     config.url = urlHelper(config.url!)  
     return config
   },

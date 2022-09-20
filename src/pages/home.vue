@@ -5,17 +5,26 @@
             <el-carousel-item>Slide 2</el-carousel-item>
             <el-carousel-item>Slide 3</el-carousel-item>
         </el-carousel>
-        <div class="recommend-item-box" v-for="item in recommendList" @click="showDetail">
-            <div class="video-prepics" :style="{backgroundImage: 'url(' + item.poster + ')'}" >
-                <div class="miniVideoContainer"  @mouseleave="closeVideo" @mouseenter="playVideo(item.id)" >
+        <div 
+            class="recommend-item-box" 
+            v-for="item in recommendList" 
+            @mouseleave="closeVideo(item.id)" 
+            @mouseenter="playVideo(item.id)" 
+            @click="showDetail">
+            <div class="video-prepics">
+                <div class="miniVideoContainer">
                     <video
-                        :style="{zIndex: videoLevel}"
                         class="video-player" 
                         ref="videoPlayers" preload="auto"                        
                         type="video/mp4"
                         muted>
                         <source>
                     </video>
+                </div>
+                <div
+                    v-if="item.isCover"
+                    class="video-prepics-cover" 
+                    :style="{backgroundImage: 'url(' + item.poster + ')'}">
                 </div>
             </div>
             <div class="video-Info">
@@ -42,7 +51,6 @@ let cards = ref(['1', '2'])
 let videoPlayers = ref(null)
 //单个播放器buff
 let videoPlayer = ref<VideoJsPlayer | null>(null)
-let videoLevel = ref(0)
 
 
 function showDetail() {
@@ -58,36 +66,43 @@ function showDetail() {
 const recommendList = reactive([
     {
         id: 0,
+        isCover :true,
         poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
         videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     },
     {
         id: 1,
+        isCover :true,
         poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
         videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     },
     {
         id: 2,
+        isCover :true,
         poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
         videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     },
     {
         id: 3,
+        isCover :true,
         poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
         videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     },
     {
         id: 4,
+        isCover :true,
         poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
         videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     },
     {
         id: 5,
+        isCover :true,
         poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
         videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     },
     {
         id: 6,
+        isCover :true,
         poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
         videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     }
@@ -95,10 +110,8 @@ const recommendList = reactive([
 
 
 // 用于用户鼠标悬停时播放器自动播放
-function playVideo(id: string | number) {
-    console.log(id);    
-    console.log(videoPlayers.value);
-    videoLevel.value = 2
+function playVideo(id: number) {
+    recommendList[id].isCover = false
     videoPlayer.value = videojs(videoPlayers.value![id], {
         aspectRatio: "16:9",
         sources: [{
@@ -110,9 +123,9 @@ function playVideo(id: string | number) {
     videoPlayer.value.play()
 }
 //鼠标离开时清除播放器
-function closeVideo() {
+function closeVideo(id: number) {
     //清空buff
-    videoLevel.value = 0
+    recommendList[id].isCover = true
     videoPlayer.value?.pause()
     videoPlayer = ref(null)
 }
@@ -148,15 +161,18 @@ function closeVideo() {
             aspect-ratio: 16/9;
             width: 100%;
             display: flex;
-            background-size: cover;
-            z-index: 1;
 
+            .video-prepics-cover {
+                aspect-ratio: 16/9;
+                width: 100%;
+                background-size: cover;
+                                transform: translate(-100%, 0%);
+            }
 
 
             .miniVideoContainer {
                 aspect-ratio: 16/9;
                 width: 100%;
-                transform: translate(0, 0%);
 
                 .video-player {
                     aspect-ratio: 16/9;

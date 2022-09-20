@@ -44,6 +44,7 @@ import { useRoute } from 'vue-router';
 import { store } from "../store";
 import { UserInfo } from "../interface/auth";
 import { reqLogin, reqRegister, reqCode, reqforgetPassWord } from "../service/auth";
+import { router } from '../router';
 
 let route = useRoute()
 let emailCheck = ref(false)
@@ -54,7 +55,7 @@ let user: UserInfo = reactive({
     email: route.query.userAccount ? route.query.userAccount as string : '',
     code: '',
     uid: '',
-    password: '',
+    password: null,
     name: ''
 })
 
@@ -85,14 +86,16 @@ let rules = reactive({
         },
 
         {
-            validator: (rule: any, value: string, callback: Function)=>{
+            validator: (rule: any, value: string, callback: Function) => {
                 if (emailErr.value) {
                     callback(new Error(emailErr.value));
                 } else {
+                    console.log(1);
+
                     callback();
                 }
             },
-            trigger: 'change'
+            trigger: 'blur'
         }
     ],
 })
@@ -115,7 +118,7 @@ function testReg() {
 
 //移除错误信息
 function removeMssage() {
-    emailErr.value = ''
+    // emailErr.value = ''
 }
 
 //提取用户登录信息
@@ -125,9 +128,7 @@ function assignUserInfo(res: Promise<UserInfo>) {
 
 //请求
 async function register() {
-    let formState = false
     userForm.value.validate((valid: any) => {
-        console.log(valid);
         if (valid) {
             (async () => {
                 let res = await reqRegister(user)
@@ -135,7 +136,8 @@ async function register() {
                 if (typeof (res) === typeof (Object)) {
                     Object.assign(user, res)
                 } else {
-                    emailErr = res
+                    emailErr.value = res
+                    return false;
                 }
             })()
         } else {
@@ -143,9 +145,6 @@ async function register() {
             return false;
         }
     })
-
-    if (formState) {
-    }
 }
 
 async function login() {
@@ -153,18 +152,27 @@ async function login() {
     if (testReg()) {
         if (user.password) {
             let res = await reqLogin({ email: user.email, password: user.password })
-            Object.assign(user, res.user)
-            sessionStorage.setItem('token', res.token)
-            store.commit('setToken', res.token)
+            if (res.user) {
+                store.commit('setUser', res.user)
+                localStorage.setItem('token', res.token)
+                router.push('Auth')
+            } else {
+                emailErr.value = res
+                return false;
+            }
         }
         if (user.code) {
-            let res = await reqLogin({ email: user.email, code: user.code })
+            let res = await reqLogin({ email: user.email, code: user.code, password: user.password })
             //本机运行版本为达成password非null值得code登录方式，需要拉取最新后端测试代码
-            Object.assign(user, res.user)
-            sessionStorage.setItem('token', res.token)
-            store.commit('setToken', res.token)
+            if (res.user) {
+                store.commit('setUser', res.user)
+                localStorage.setItem('token', res.token)
+                router.push('Auth')           
+            } else {
+                emailErr.value = res
+                return false;
+            }
         }
-
     }
 }
 
@@ -192,6 +200,7 @@ async function forget() {
     background-color: aquamarine;
     border: 1px solid black;
     margin: auto;
+    z-index: 999;
 
     .el-form-item {
         margin: 20px;

@@ -15,14 +15,14 @@ import { onMounted, watch } from 'vue';
 import { router } from '../router';
 import { store } from '../store';
 
-watch(()=>store.state.token,(newStore) => {
+watch(()=>store.state.user,(newStore) => {
     if(newStore) {
         router.push('Auth')
     }
 })
 
 onMounted(()=>{
-    if (!store.state.token) {
+    if (!localStorage.getItem('token')) {
         router.push('Login')
     }
 })
@@ -64,5 +64,6 @@ onMounted(()=>{
     opacity: .8;
     display: flex;
     flex-wrap: wrap;
+    z-index: 999;
 }
 </style>
