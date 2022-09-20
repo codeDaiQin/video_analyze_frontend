@@ -6,18 +6,20 @@
             <el-carousel-item>Slide 3</el-carousel-item>
         </el-carousel>
         <div class="recommend-item-box" v-for="item in recommendList" @click="showDetail">
-            <div class="video-prepics">
-                <div class="miniVideoContainer"  @mouseleave="closeVideo">
-                    <video class="video-player" ref="videoPlayers" preload="auto" :poster="item.poster"
-                        @mouseenter="playVideo(item.id)" type="video/mp4">
+            <div class="video-prepics" :style="{backgroundImage: 'url(' + item.poster + ')'}" >
+                <div class="miniVideoContainer"  @mouseleave="closeVideo" @mouseenter="playVideo(item.id)" >
+                    <video
+                        :style="{zIndex: videoLevel}"
+                        class="video-player" 
+                        ref="videoPlayers" preload="auto"                        
+                        type="video/mp4"
+                        muted>
                         <source>
                     </video>
                 </div>
             </div>
-
-
             <div class="video-Info">
-                <div class="title"><span>内容</span></div>
+                <div class="title"><span>{{item.id}}</span></div>
                 <div class="number"><span>60</span></div>
             </div>
         </div>
@@ -40,6 +42,7 @@ let cards = ref(['1', '2'])
 let videoPlayers = ref(null)
 //单个播放器buff
 let videoPlayer = ref<VideoJsPlayer | null>(null)
+let videoLevel = ref(0)
 
 
 function showDetail() {
@@ -67,28 +70,51 @@ const recommendList = reactive([
         id: 2,
         poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
         videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
+    },
+    {
+        id: 3,
+        poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
+        videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
+    },
+    {
+        id: 4,
+        poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
+        videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
+    },
+    {
+        id: 5,
+        poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
+        videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
+    },
+    {
+        id: 6,
+        poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
+        videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     }
 ])
 
 
 // 用于用户鼠标悬停时播放器自动播放
 function playVideo(id: string | number) {
+    console.log(id);    
+    console.log(videoPlayers.value);
+    videoLevel.value = 2
     videoPlayer.value = videojs(videoPlayers.value![id], {
-        autoplay: 'muted',
         aspectRatio: "16:9",
         sources: [{
             src: recommendList[id as any].videoUrl,
         }],
         width: 1,
     })
-    console.log(videoPlayer);
+    videoPlayer.value.load()
+    videoPlayer.value.play()
 }
 //鼠标离开时清除播放器
-function closeVideo(event: any) {
+function closeVideo() {
     //清空buff
-    videoPlayer.value?.dispose()
+    videoLevel.value = 0
+    videoPlayer.value?.pause()
     videoPlayer = ref(null)
-    console.log(event.target);
 }
 
 
@@ -116,13 +142,14 @@ function closeVideo(event: any) {
         aspect-ratio: 1.2/1;
         border-radius: 10px;
         border: 1px solid black;
-        // overflow: hidden;
+        overflow: hidden;
 
         .video-prepics {
             aspect-ratio: 16/9;
             width: 100%;
-            background-color: aqua;
             display: flex;
+            background-size: cover;
+            z-index: 1;
 
 
 
@@ -160,7 +187,7 @@ function closeVideo(event: any) {
 
 }
 
-.vjs_video_3-dimensions.vjs-fluid:not(.vjs-audio-only-mode) {
+.vjs-fluid:not(.vjs-audio-only-mode) {
     padding-top: 0%;
     width: 100%;
 }
