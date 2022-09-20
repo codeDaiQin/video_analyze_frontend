@@ -23,7 +23,7 @@
         <div class="right-entry">
             <button @click="router.push('Auth')" v-if="showEntry && store.state.token">用户头像</button>
             <div  @mouseenter="showLogin" @mouseleave="isLogin=false">
-                <button @click="router.push('Auth')" v-if="showEntry && !store.state.token">登录</button>
+                <button @click="router.push('Auth');isLogin=false" v-if="showEntry && !store.state.token">登录</button>
                 <keep-alive>
                     <Login v-if="isLogin" class="Login" />
                 </keep-alive>

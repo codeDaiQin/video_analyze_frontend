@@ -3,7 +3,7 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 
 import Header from './components/Header.vue'
-import 'video.js/dist/video-js.min.css'
+import 'video.js/dist/video-js.css'
 
 </script>
 

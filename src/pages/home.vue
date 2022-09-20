@@ -6,14 +6,15 @@
             <el-carousel-item>Slide 3</el-carousel-item>
         </el-carousel>
         <div class="recommend-item-box" v-for="item in recommendList" @click="showDetail">
-            <div class="video-prepics"></div>
-            <div class="miniVideoContainer">
-                <video id="video-player" ref="videoPlayer" preload="auto" :poster="item.poster" controls @mouseenter="playVideo(item.id)">
-                    <source
-                    :src="item.videoUrl"
-                    type="video/mp4">
-                </video>
+            <div class="video-prepics">
+                <div class="miniVideoContainer"  @mouseleave="closeVideo">
+                    <video class="video-player" ref="videoPlayers" preload="auto" :poster="item.poster"
+                        @mouseenter="playVideo(item.id)" type="video/mp4">
+                        <source>
+                    </video>
+                </div>
             </div>
+
 
             <div class="video-Info">
                 <div class="title"><span>内容</span></div>
@@ -23,20 +24,22 @@
 
     </el-container>
     <div height="" v-for="card in cards" class="otherContainer">
-        <Card :cardName="card"/>
+        <Card :cardName="card" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, Ref, ref } from 'vue';
+import { reactive, Ref, ref, toRef } from 'vue';
 import { router } from '../router';
 import Card from '../pages/Card.vue'
-import Video from 'video.js';
+import videojs, { VideoJsPlayer } from 'video.js';
 
 
-let cards = ref(['1','2'])
-let videoUrl = ref('')
-let videoPlayer = ref(null)
+let cards = ref(['1', '2'])
+//一组播放器集合
+let videoPlayers = ref(null)
+//单个播放器buff
+let videoPlayer = ref<VideoJsPlayer | null>(null)
 
 
 function showDetail() {
@@ -50,26 +53,42 @@ function showDetail() {
 
 //推荐区的卡片
 const recommendList = reactive([
-    {id : 0,
-        poster : '../assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
-        videoUrl : 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
+    {
+        id: 0,
+        poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
+        videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     },
-    {id : 1,
-        poster : '../assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
-        videoUrl : 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4', 
+    {
+        id: 1,
+        poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
+        videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     },
-    {id : 2,
-        poster : '../assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
-        videoUrl : 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4', 
+    {
+        id: 2,
+        poster: '/src/assets/o_1db27qbc54a091of0ur0d1dos8o.jpg',
+        videoUrl: 'http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4',
     }
 ])
 
 
 // 用于用户鼠标悬停时播放器自动播放
 function playVideo(id: string | number) {
-    
-    console.log(videoPlayer.value![id]);
-    
+    videoPlayer.value = videojs(videoPlayers.value![id], {
+        autoplay: 'muted',
+        aspectRatio: "16:9",
+        sources: [{
+            src: recommendList[id as any].videoUrl,
+        }],
+        width: 1,
+    })
+    console.log(videoPlayer);
+}
+//鼠标离开时清除播放器
+function closeVideo(event: any) {
+    //清空buff
+    videoPlayer.value?.dispose()
+    videoPlayer = ref(null)
+    console.log(event.target);
 }
 
 
@@ -83,8 +102,8 @@ function playVideo(id: string | number) {
     margin: 10px auto;
     justify-content: left;
     display: grid;
-    grid-template-columns: repeat(5,1fr) ;
-    grid-template-rows: repeat(3,1fr) ;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     grid-gap: 15px;
 
     .el-carousel {
@@ -97,30 +116,39 @@ function playVideo(id: string | number) {
         aspect-ratio: 1.2/1;
         border-radius: 10px;
         border: 1px solid black;
-        overflow: hidden;
+        // overflow: hidden;
 
         .video-prepics {
             aspect-ratio: 16/9;
             width: 100%;
             background-color: aqua;
+            display: flex;
+
+
+
+            .miniVideoContainer {
+                aspect-ratio: 16/9;
+                width: 100%;
+                transform: translate(0, 0%);
+
+                .video-player {
+                    aspect-ratio: 16/9;
+                    width: 100%;
+
+                    video {
+                        width: 100%;
+                    }
+
+                }
+
+            }
         }
 
         .video-Info {
+            flex: 1;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            
-        }
-        .miniVideoContainer {
-            aspect-ratio: 16/9;
-            width: 100%;
-            top: 0;
-            transform: translate(0,-100%);
-
-            video {
-                aspect-ratio: 16/9;
-                width: 100%;
-            }
 
         }
     }
@@ -129,6 +157,20 @@ function playVideo(id: string | number) {
         padding: 0px;
         margin-bottom: 50px;
     }
+
+}
+
+.vjs_video_3-dimensions.vjs-fluid:not(.vjs-audio-only-mode) {
+    padding-top: 0%;
+    width: 100%;
+}
+
+.video-js.vjs-fluid,
+.video-js.vjs-16-9,
+.video-js.vjs-4-3 {
+
+    width: 100%;
+    background-color: #161616;
 
 }
 </style>
