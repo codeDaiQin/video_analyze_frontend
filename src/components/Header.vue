@@ -1,8 +1,8 @@
 <template>
     <div class="header">
         <div class="left-entry">
-            <router-link to="/Home" class="entry-item">首页</router-link>
-            <router-link to="/HelloWorld" class="entry-item">HelloWorld</router-link>
+            <button @click="router.push('Home')" class="entry-item">首页</button>
+            <button @click="router.push('HelloWorld')" class="entry-item">HelloWorld</button>
         </div>
         <div class="center-search-container">
             <div class="center-search-bar">
@@ -21,30 +21,63 @@
 
         </div>
         <div class="right-entry">
-            <router-link to="/Login" class="entry-item">登录</router-link>
+            <button @click="router.push('Auth')" v-if="showEntry && store.state.token">用户头像</button>
+            <div  @mouseenter="showLogin" @mouseleave="isLogin=false">
+                <button @click="router.push('Auth');isLogin=false" v-if="showEntry && !store.state.token">登录</button>
+                <keep-alive>
+                    <Login v-if="isLogin" class="Login" />
+                </keep-alive>
+            </div>
+
+            <button @click="router.push('Upload')">发布</button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { store } from "../store";
+import { onMounted, provide, ref, watch } from 'vue';
 import { router } from '../router';
+import { useRoute } from 'vue-router'
+import Login from "../pages/Login.vue";
 
+const route = useRoute()
 const searchInput = ref('')
+const showEntry = ref(true)
+provide('show', showEntry)
+let isLogin = ref<boolean>(false)
+
+function showLogin() {
+    console.log(11);
+
+    if (!store.state.token) {
+        isLogin.value = true
+    }
+}
 
 function goResearch() {
     let location = {
         name: 'Research',
         query: {
             searchInput: searchInput.value
-        } 
+        }
     }
     router.push(location)
 }
+
+watch(route, () => {
+    showEntry.value = !(route.path.indexOf('Auth') === 1)
+})
+
+onMounted(() => {
+    store.state.token = sessionStorage.getItem('token')!
+})
+
 </script>
 
 <style scoped>
 .header {
+    margin: 10px auto;
     top: 0;
     width: 100%;
     display: flex;
@@ -130,7 +163,7 @@ function goResearch() {
     height: 32px;
     border: none;
     border-right: 6px;
-    color:  rgb(54, 54, 54);
+    color: rgb(54, 54, 54);
     line-height: 32px;
     cursor: pointer;
     transition: background-color .3s;
@@ -155,7 +188,14 @@ function goResearch() {
     padding: 2px;
 }
 
-.entry-item {
-    margin: 5px;
+.right-entry button {
+    background-color: pink;
+    margin: 1px;
+    border: 1px black solid;
+}
+
+.Login {
+    position: absolute;
+    transform: translate(-80%,0);
 }
 </style>

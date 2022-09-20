@@ -13,10 +13,14 @@
     "element-plus": "^2.2.16",
     "swiper": "^8.3.2",
     "vue": "^3.2.37",
-    "vue-router": "^4.0.0-beta.13"
+    "vue-router": "^4.0.0-beta.13",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@types/video.js": "^7.3.48",
     "@vitejs/plugin-vue": "^3.0.3",
+    "less": "^4.1.3",
+    "less-loader": "^11.0.0",
     "typescript": "^4.6.4",
     "video.js": "^7.20.2",
     "vite": "^3.0.7",

@@ -2,7 +2,7 @@
     <div class="video-container">
         <div class="left-container"></div>
         <div class="middle-container">
-            <video id="video-js" preload="auto" controls>
+            <video id="video-player" preload="auto" controls poster="../assets/o_1db27qbc54a091of0ur0d1dos8o.jpg">
                 <source
                     src="http://kefuzhihua-1300902972.cos.ap-nanjing.myqcloud.com/1642488976180-c6883103-0bbc-4a0a-97b8-b598add8b943_material%20%281%29.mp4"
                     type="video/mp4">
@@ -13,11 +13,11 @@
 </template>
 
 <script setup lang="ts">
-import Videojs from 'video.js/dist/video'
+import Videojs from 'video.js'
 import { onMounted } from 'vue';
 
 onMounted(()=> {
-    Videojs('#video-js', {
+    Videojs('#video-player', {
             autoplay: 'muted',
             controls: true,
             aspectRatio: "16:9",
@@ -39,10 +39,13 @@ onMounted(()=> {
 .middle-container {
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
-#video-js {
+#video-player {
+    padding: 0;
     margin: auto;
 }
+
 </style>
