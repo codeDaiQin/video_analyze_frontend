@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@element-plus/icons-vue': ^2.0.9
   '@types/video.js': ^7.3.48
   '@vitejs/plugin-vue': ^3.0.3
   axios: ^0.27.2
@@ -17,6 +18,7 @@ specifiers:
   vuex: ^4.0.2
 
 dependencies:
+  '@element-plus/icons-vue': 2.0.9_vue@3.2.38
   axios: registry.npmmirror.com/axios/0.27.2
   element-plus: registry.npmmirror.com/element-plus/2.2.16_vue@3.2.38
   swiper: registry.npmmirror.com/swiper/8.3.2
@@ -36,6 +38,21 @@ devDependencies:
 
 packages:
 
+  /@babel/runtime/7.19.0:
+    resolution: {integrity: sha512-eR8Lo9hnDS7tqkO7NsV+mKvCmv5boaXFSZ70DnfhcgiEne8hv9oCEd36Klw74EtizEqLsy4YnW8UWwpBVolHZA==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.9
+    dev: true
+
+  /@element-plus/icons-vue/2.0.9_vue@3.2.38:
+    resolution: {integrity: sha512-okdrwiVeKBmW41Hkl0eMrXDjzJwhQMuKiBOu17rOszqM+LS/yBYpNQNV5Jvoh06Wc+89fMmb/uhzf8NZuDuUaQ==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      vue: registry.npmmirror.com/vue/3.2.38
+    dev: false
+
   /@esbuild/linux-loong64/0.15.7:
     resolution: {integrity: sha512-IKznSJOsVUuyt7cDzzSZyqBEcZe+7WlBqTVXiF1OXP/4Nm387ToaXZ0fyLwI1iBlI/bzpxVq411QE2/Bt2XWWw==}
     engines: {node: '>=12'}
@@ -53,8 +70,69 @@ packages:
     resolution: {integrity: sha512-/IF1Vq0ex/JYCcEFRVGnfZoQ8uRvX/5zQXg5GZCKYXHTLJLWCljd+lBE604SNgUzfXhW6WRnUPABuiBJKgoS7g==}
     dev: true
 
+  /@videojs/http-streaming/2.14.2:
+    resolution: {integrity: sha512-K1raSfO/pq5r8iUas3OSYni0kXOj91n8ealIpV02khghzGv9LQ6O3YUqYd/eAhJ1HIrmZWOnrYpK/P+mhUExXQ==}
+    engines: {node: '>=8', npm: '>=5'}
+    dependencies:
+      '@babel/runtime': 7.19.0
+      '@videojs/vhs-utils': 3.0.5
+      aes-decrypter: 3.1.3
+      global: 4.4.0
+      m3u8-parser: 4.7.1
+      mpd-parser: 0.21.1
+      mux.js: 6.0.1
+      video.js: 7.20.2
+    dev: true
+
+  /@videojs/vhs-utils/3.0.5:
+    resolution: {integrity: sha512-PKVgdo8/GReqdx512F+ombhS+Bzogiofy1LgAj4tN8PfdBx3HSS7V5WfJotKTqtOWGwVfSWsrYN/t09/DSryrw==}
+    engines: {node: '>=8', npm: '>=5'}
+    dependencies:
+      '@babel/runtime': 7.19.0
+      global: 4.4.0
+      url-toolkit: 2.2.5
+    dev: true
+
+  /@videojs/xhr/2.6.0:
+    resolution: {integrity: sha512-7J361GiN1tXpm+gd0xz2QWr3xNWBE+rytvo8J3KuggFaLg+U37gZQ2BuPLcnkfGffy2e+ozY70RHC8jt7zjA6Q==}
+    dependencies:
+      '@babel/runtime': 7.19.0
+      global: 4.4.0
+      is-function: 1.0.2
+    dev: true
+
+  /@xmldom/xmldom/0.7.5:
+    resolution: {integrity: sha1-CfpR41bQfQviAGQrDk+R2ObdQI0=}
+    engines: {node: '>=10.0.0'}
+    dev: true
+
+  /aes-decrypter/3.1.3:
+    resolution: {integrity: sha512-VkG9g4BbhMBy+N5/XodDeV6F02chEk9IpgRTq/0bS80y4dzy79VH2Gtms02VXomf3HmyRe3yyJYkJ990ns+d6A==}
+    dependencies:
+      '@babel/runtime': 7.19.0
+      '@videojs/vhs-utils': 3.0.5
+      global: 4.4.0
+      pkcs7: 1.0.4
+    dev: true
+
+  /debug/3.2.7:
+    resolution: {integrity: sha1-clgLfpFF+zm2Z2+cXl+xALk0F5o=}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.3
+    dev: true
+    optional: true
+
+  /dom-walk/0.1.2:
+    resolution: {integrity: sha1-DFSL7wSPTR8qlySQAiNgYNqj/YQ=}
+    dev: true
+
   /errno/0.1.8:
-    resolution: {integrity: sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==}
+    resolution: {integrity: sha1-i7Ppx9Rjvkl2/4iPdrSAnrwugR8=}
     hasBin: true
     requiresBuild: true
     dependencies:
@@ -243,12 +321,19 @@ packages:
     optional: true
 
   /fsevents/2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    resolution: {integrity: sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro=}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
+
+  /global/4.4.0:
+    resolution: {integrity: sha1-PnsQUXkAajI+1xqvyj6cV6XMZAY=}
+    dependencies:
+      min-document: 2.19.0
+      process: 0.11.10
+    dev: true
 
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
@@ -257,15 +342,35 @@ packages:
     optional: true
 
   /image-size/0.5.5:
-    resolution: {integrity: sha512-6TDAlDPZxUFCv+fuOkIoXT/V/f3Qbq8e37p+YOiYrUv3v9cc3/6x78VdfPgFVaB9dZYeLUfKgHRebpkm/oP2VQ==}
+    resolution: {integrity: sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=}
     engines: {node: '>=0.10.0'}
     hasBin: true
     requiresBuild: true
     dev: true
     optional: true
 
+  /individual/2.0.0:
+    resolution: {integrity: sha512-pWt8hBCqJsUWI/HtcfWod7+N9SgAqyPEaF7JQjwzjn5vGrpg6aQ5qeAFQ7dx//UH4J1O+7xqew+gCeeFt6xN/g==}
+    dev: true
+
+  /is-function/1.0.2:
+    resolution: {integrity: sha1-Twl/MKv2762smDOxfKXcA/gUTgg=}
+    dev: true
+
+  /keycode/2.2.1:
+    resolution: {integrity: sha512-Rdgz9Hl9Iv4QKi8b0OlCRQEzp4AgVxyCtz5S/+VIHezDmrDhkp2N2TqBWOLz0/gbeREXOOiI9/4b8BY9uw2vFg==}
+    dev: true
+
+  /m3u8-parser/4.7.1:
+    resolution: {integrity: sha512-pbrQwiMiq+MmI9bl7UjtPT3AK603PV9bogNlr83uC+X9IoxqL5E4k7kU7fMQ0dpRgxgeSMygqUa0IMLQNXLBNA==}
+    dependencies:
+      '@babel/runtime': 7.19.0
+      '@videojs/vhs-utils': 3.0.5
+      global: 4.4.0
+    dev: true
+
   /make-dir/2.1.0:
-    resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
+    resolution: {integrity: sha1-XwMQ4YuL6JjMBwCSlaMK5B6R5vU=}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
@@ -275,12 +380,42 @@ packages:
     optional: true
 
   /mime/1.6.0:
-    resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
+    resolution: {integrity: sha1-Ms2eXGRVO9WNGaVor0Uqz/BJgbE=}
     engines: {node: '>=4'}
     hasBin: true
     requiresBuild: true
     dev: true
     optional: true
+
+  /min-document/2.19.0:
+    resolution: {integrity: sha1-e9KC4/WELtKVu3SM3Z8f+iyCRoU=}
+    dependencies:
+      dom-walk: 0.1.2
+    dev: true
+
+  /mpd-parser/0.21.1:
+    resolution: {integrity: sha512-BxlSXWbKE1n7eyEPBnTEkrzhS3PdmkkKdM1pgKbPnPOH0WFZIc0sPOWi7m0Uo3Wd2a4Or8Qf4ZbS7+ASqQ49fw==}
+    hasBin: true
+    dependencies:
+      '@babel/runtime': 7.19.0
+      '@videojs/vhs-utils': 3.0.5
+      '@xmldom/xmldom': 0.7.5
+      global: 4.4.0
+    dev: true
+
+  /ms/2.1.3:
+    resolution: {integrity: sha1-V0yBOM4dK1hh8LRFedut1gxmFbI=}
+    dev: true
+    optional: true
+
+  /mux.js/6.0.1:
+    resolution: {integrity: sha512-22CHb59rH8pWGcPGW5Og7JngJ9s+z4XuSlYvnxhLuc58cA1WqGDQPzuG8I+sPm1/p0CdgpzVTaKW408k5DNn8w==}
+    engines: {node: '>=8', npm: '>=5'}
+    hasBin: true
+    dependencies:
+      '@babel/runtime': 7.19.0
+      global: 4.4.0
+    dev: true
 
   /needle/3.1.0:
     resolution: {integrity: sha512-gCE9weDhjVGCRqS8dwDR/D3GTAeyXLXuqp7I8EzH6DllZGXSUyxuqqLh+YX9rMAWaaTFyVAg6rHGL25dqvczKw==}
@@ -288,7 +423,7 @@ packages:
     hasBin: true
     requiresBuild: true
     dependencies:
-      debug: registry.npmmirror.com/debug/3.2.7
+      debug: 3.2.7
       iconv-lite: registry.npmmirror.com/iconv-lite/0.6.3
       sax: registry.npmmirror.com/sax/1.2.4
     transitivePeerDependencies:
@@ -296,9 +431,69 @@ packages:
     dev: true
     optional: true
 
+  /pkcs7/1.0.4:
+    resolution: {integrity: sha512-afRERtHn54AlwaF2/+LFszyAANTCggGilmcmILUzEjvs3XgFZT+xE6+QWQcAGmu4xajy+Xtj7acLOPdx5/eXWQ==}
+    hasBin: true
+    dependencies:
+      '@babel/runtime': 7.19.0
+    dev: true
+
+  /process/0.11.10:
+    resolution: {integrity: sha1-czIwDoQBYb2j5podHZGn1LwW8YI=}
+    engines: {node: '>= 0.6.0'}
+    dev: true
+
+  /regenerator-runtime/0.13.9:
+    resolution: {integrity: sha1-iSV0Kpj/2QgUmI11Zq0wyjsmO1I=}
+    dev: true
+
+  /rust-result/1.0.0:
+    resolution: {integrity: sha512-6cJzSBU+J/RJCF063onnQf0cDUOHs9uZI1oroSGnHOph+CQTIJ5Pp2hK5kEQq1+7yE/EEWfulSNXAQ2jikPthA==}
+    dependencies:
+      individual: 2.0.0
+    dev: true
+
+  /safe-json-parse/4.0.0:
+    resolution: {integrity: sha1-fA9XjPzNEtM6ccDgVBPi7KFx6qw=}
+    dependencies:
+      rust-result: 1.0.0
+    dev: true
+
   /source-map/0.6.1:
-    resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
+    resolution: {integrity: sha1-dHIq8y6WFOnCh6jQu95IteLxomM=}
     engines: {node: '>=0.10.0'}
+
+  /url-toolkit/2.2.5:
+    resolution: {integrity: sha512-mtN6xk+Nac+oyJ/PrI7tzfmomRVNFIWKUbG8jdYFt52hxbiReFAXIjYskvu64/dvuW71IcB7lV8l0HvZMac6Jg==}
+    dev: true
+
+  /video.js/7.20.2:
+    resolution: {integrity: sha512-hdvAHKAyaL6bCDkeu0pPtFYKi1EDaOUovm7FN1xqBDolUxgH8FKy1WIgTS+Ouuaw7R54SCTcSeXjZEizhy9ouQ==}
+    dependencies:
+      '@babel/runtime': 7.19.0
+      '@videojs/http-streaming': 2.14.2
+      '@videojs/vhs-utils': 3.0.5
+      '@videojs/xhr': 2.6.0
+      aes-decrypter: 3.1.3
+      global: 4.4.0
+      keycode: 2.2.1
+      m3u8-parser: 4.7.1
+      mpd-parser: 0.21.1
+      mux.js: 6.0.1
+      safe-json-parse: 4.0.0
+      videojs-font: 3.2.0
+      videojs-vtt.js: 0.15.4
+    dev: true
+
+  /videojs-font/3.2.0:
+    resolution: {integrity: sha512-g8vHMKK2/JGorSfqAZQUmYYNnXmfec4MLhwtEFS+mMs2IDY398GLysy6BH6K+aS1KMNu/xWZ8Sue/X/mdQPliA==}
+    dev: true
+
+  /videojs-vtt.js/0.15.4:
+    resolution: {integrity: sha512-r6IhM325fcLb1D6pgsMkTQT1PpFdUdYZa1iqk7wJEu+QlibBwATPfPc9Bg8Jiym0GE5yP1AG2rMLu+QMVWkYtA==}
+    dependencies:
+      global: 4.4.0
+    dev: true
 
   registry.npmmirror.com/@babel/helper-string-parser/7.18.10:
     resolution: {integrity: sha512-XtIfWmeNY3i4t7t4D2t02q50HvqHybPqW2ki1kosnvWCwuCMeo81Jf0gwr85jy/neUdg5XDdeFE/80DXiO+njw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@babel/helper-string-parser/-/helper-string-parser-7.18.10.tgz}
@@ -347,17 +542,6 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  registry.npmmirror.com/@element-plus/icons-vue/2.0.9_vue@3.2.38:
-    resolution: {integrity: sha512-okdrwiVeKBmW41Hkl0eMrXDjzJwhQMuKiBOu17rOszqM+LS/yBYpNQNV5Jvoh06Wc+89fMmb/uhzf8NZuDuUaQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@element-plus/icons-vue/-/icons-vue-2.0.9.tgz}
-    id: registry.npmmirror.com/@element-plus/icons-vue/2.0.9
-    name: '@element-plus/icons-vue'
-    version: 2.0.9
-    peerDependencies:
-      vue: ^3.2.0
-    dependencies:
-      vue: registry.npmmirror.com/vue/3.2.38
-    dev: false
-
   registry.npmmirror.com/@floating-ui/core/1.0.1:
     resolution: {integrity: sha512-bO37brCPfteXQfFY0DyNDGB3+IMe4j150KFQcgJ5aBP295p9nBGeHEs/p0czrRbtlHq4Px/yoPXO/+dOCcF4uA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@floating-ui/core/-/core-1.0.1.tgz}
     name: '@floating-ui/core'
@@ -392,14 +576,11 @@ packages:
     version: 0.0.15
     dev: false
 
-  registry.npmmirror.com/@videojs/http-streaming/2.14.2_video.js@7.20.2:
+  registry.npmmirror.com/@videojs/http-streaming/2.14.2:
     resolution: {integrity: sha512-K1raSfO/pq5r8iUas3OSYni0kXOj91n8ealIpV02khghzGv9LQ6O3YUqYd/eAhJ1HIrmZWOnrYpK/P+mhUExXQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@videojs/http-streaming/-/http-streaming-2.14.2.tgz}
-    id: registry.npmmirror.com/@videojs/http-streaming/2.14.2
     name: '@videojs/http-streaming'
     version: 2.14.2
     engines: {node: '>=8', npm: '>=5'}
-    peerDependencies:
-      video.js: ^6 || ^7
     dependencies:
       '@babel/runtime': registry.npmmirror.com/@babel/runtime/7.19.0
       '@videojs/vhs-utils': registry.npmmirror.com/@videojs/vhs-utils/3.0.5
@@ -408,7 +589,7 @@ packages:
       m3u8-parser: registry.npmmirror.com/m3u8-parser/4.7.1
       mpd-parser: registry.npmmirror.com/mpd-parser/0.21.1
       mux.js: registry.npmmirror.com/mux.js/6.0.1
-      video.js: registry.npmmirror.com/video.js/7.20.2
+      video.js: 7.20.2
     dev: true
 
   registry.npmmirror.com/@videojs/vhs-utils/3.0.5:
@@ -704,20 +885,6 @@ packages:
     version: 1.11.5
     dev: false
 
-  registry.npmmirror.com/debug/3.2.7:
-    resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/debug/-/debug-3.2.7.tgz}
-    name: debug
-    version: 3.2.7
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
-    dependencies:
-      ms: registry.npmmirror.com/ms/2.1.3
-    dev: true
-    optional: true
-
   registry.npmmirror.com/delayed-stream/1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/delayed-stream/-/delayed-stream-1.0.0.tgz}
     name: delayed-stream
@@ -748,7 +915,7 @@ packages:
       vue: ^3.2.0
     dependencies:
       '@ctrl/tinycolor': registry.npmmirror.com/@ctrl/tinycolor/3.4.1
-      '@element-plus/icons-vue': registry.npmmirror.com/@element-plus/icons-vue/2.0.9_vue@3.2.38
+      '@element-plus/icons-vue': 2.0.9_vue@3.2.38
       '@floating-ui/dom': registry.npmmirror.com/@floating-ui/dom/1.0.1
       '@popperjs/core': /@sxzz/popperjs-es/2.11.7
       '@types/lodash': registry.npmmirror.com/@types/lodash/4.14.184
@@ -1036,13 +1203,6 @@ packages:
       global: registry.npmmirror.com/global/4.4.0
     dev: true
 
-  registry.npmmirror.com/ms/2.1.3:
-    resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ms/-/ms-2.1.3.tgz}
-    name: ms
-    version: 2.1.3
-    dev: true
-    optional: true
-
   registry.npmmirror.com/mux.js/6.0.1:
     resolution: {integrity: sha512-22CHb59rH8pWGcPGW5Og7JngJ9s+z4XuSlYvnxhLuc58cA1WqGDQPzuG8I+sPm1/p0CdgpzVTaKW408k5DNn8w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mux.js/-/mux.js-6.0.1.tgz}
     name: mux.js
@@ -1268,7 +1428,7 @@ packages:
     version: 7.20.2
     dependencies:
       '@babel/runtime': registry.npmmirror.com/@babel/runtime/7.19.0
-      '@videojs/http-streaming': registry.npmmirror.com/@videojs/http-streaming/2.14.2_video.js@7.20.2
+      '@videojs/http-streaming': registry.npmmirror.com/@videojs/http-streaming/2.14.2
       '@videojs/vhs-utils': registry.npmmirror.com/@videojs/vhs-utils/3.0.5
       '@videojs/xhr': registry.npmmirror.com/@videojs/xhr/2.6.0
       aes-decrypter: registry.npmmirror.com/aes-decrypter/3.1.3

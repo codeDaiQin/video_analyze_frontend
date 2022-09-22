@@ -2,27 +2,13 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 
-import Header from './components/Header.vue'
-import 'video.js/dist/video-js.css'
-
+import Header from "./components/Header.vue";
+import "video.js/dist/video-js.css";
+import Layouts from "./layouts/index.vue";
 </script>
 
 <template>
-  <el-container>
-    <el-header height="80px">
-      <Header />
-    </el-header>
-    <el-container>
-      <el-container>
-        <el-main height="">
-          <router-view></router-view>
-        </el-main>
-        <el-footer height="">
-          <!-- Footer content -->
-        </el-footer>
-      </el-container>
-    </el-container>
-  </el-container>
+  <Layouts />
 </template>
 
 <style scoped>
