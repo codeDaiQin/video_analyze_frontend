@@ -15,7 +15,7 @@
             </el-upload>
         </el-aside>
     </div>
-    <router-view class="Login"></router-view>
+    <!-- <router-view class="Login"></router-view> -->
 </template>
 
 <script setup lang="ts">
@@ -37,9 +37,9 @@ watch(() => store.state.user, (newStore) => {
 })
 
 onMounted(() => {
-    if (!localStorage.getItem('token')) {
-        router.push('Login')
-    }
+    // if (!localStorage.getItem('token')) {
+    //     router.push('Login')
+    // }
 })
 
 </script>

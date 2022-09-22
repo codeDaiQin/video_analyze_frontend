@@ -5,7 +5,7 @@
                 <el-tab-pane label="密码">
                     <el-form action="" :rules="rules" :model="user" ref="userForm">
                         <el-form-item prop="email">
-                            <el-input type="text" placeholder="请输入邮箱" v-model="user.email" @change="testReg"></el-input>
+                            <el-input type="text" placeholder="请输入邮箱" v-model="user.email"></el-input>
                         </el-form-item>
                         <el-form-item class="passwordContainer" prop="password">
                             <el-input type="password" placeholder="密码" v-model="user.password"></el-input>
@@ -21,7 +21,7 @@
                 <el-tab-pane label="验证码">
                     <el-form action="" :rules="rules" :model="user" ref="userForm">
                         <el-form-item prop="email">
-                            <el-input type="text" placeholder="请输入邮箱" v-model="user.email" @change="testReg"></el-input>
+                            <el-input type="text" placeholder="请输入邮箱" v-model="user.email"></el-input>
                         </el-form-item>
                         <el-form-item class="passwordContainer" prop="code">
                             <el-input type="code" placeholder="验证码" v-model="user.code"></el-input>
@@ -44,10 +44,8 @@ import { useRoute } from 'vue-router';
 import { store } from "../store";
 import { UserInfo } from "../interface/auth";
 import { reqLogin, reqRegister, reqCode, reqforgetPassWord } from "../service/auth";
-import { router } from '../router';
 
 let route = useRoute()
-let emailCheck = ref(false)
 let emailErr = ref('')
 let userForm = ref<any>(null)//用于el表单验证的实例，获取ref的dom对象，并使用.validate方法验证el-form上的各个内容
 
@@ -101,24 +99,9 @@ let rules = reactive({
 })
 
 
-
-
-//测试邮箱合法性
-function testReg() {
-    emailErr.value = ''
-    //验证邮箱的正则表达式（重点掌握）
-    let emailReg = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
-    //邮箱未填写，或者不合法时终止方法
-    if (!user.email || !emailReg.test(user.email)) {
-        emailErr.value = '请输入合法邮箱'
-        return emailCheck.value = false
-    }
-    return emailCheck.value = true
-}
-
 //移除错误信息
 function removeMssage() {
-    // emailErr.value = ''
+    emailErr.value = ''
 }
 
 //提取用户登录信息
@@ -134,7 +117,7 @@ async function register() {
                 let res = await reqRegister(user)
                 //返回注册成功信息
                 if (typeof (res) === typeof (Object)) {
-                    Object.assign(user, res)
+                    store.commit('setUser',res)
                 } else {
                     emailErr.value = res
                     return false;
@@ -149,44 +132,36 @@ async function register() {
 
 async function login() {
     //核验信息代码段
-    if (testReg()) {
-        if (user.password) {
+    if (user.password) {
             let res = await reqLogin({ email: user.email, password: user.password })
             if (res.token) {
                 store.commit('setUser', res)
                 localStorage.setItem('token', res.token)
-                router.push('Auth')
             } else {
                 emailErr.value = res
                 return false;
             }
         }
-        if (user.code) {
-            let res = await reqLogin({ email: user.email, code: user.code})
-            //本机运行版本为达成password非null值得code登录方式，需要拉取最新后端测试代码
-            if (res.token) {
-                store.commit('setUser', res)
-                localStorage.setItem('token', res.token)
-                router.push('Auth')
-            } else {
-                emailErr.value = res
-                return false;
-            }
+    if (user.code) {
+        let res = await reqLogin({ email: user.email, code: user.code})
+        //本机运行版本为达成password非null值得code登录方式，需要拉取最新后端测试代码
+        if (res.token) {
+            store.commit('setUser', res)
+            localStorage.setItem('token', res.token)
+        } else {
+            emailErr.value = res
+            return false;
         }
     }
 }
 
 async function getCode() {
-    if (testReg()) {
-        let res = await reqCode(user)
-        user.code = res.code;
-    }
+    let res = await reqCode(user)
+    user.code = res.code;
 }
 
 async function forget() {
-    if (testReg()) {
-        let res = await reqforgetPassWord(user)
-    }
+    let res = await reqforgetPassWord(user)
 }
 
 </script>

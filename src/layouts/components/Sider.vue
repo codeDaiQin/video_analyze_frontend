@@ -1,31 +1,59 @@
 <script setup lang="ts">
 import {
+  House,
   Document,
   Menu as IconMenu,
   Location,
   Setting,
+  User,
 } from "@element-plus/icons-vue";
+import { router } from "../../router";
+
+function toAuth() {
+  router.push('Auth')
+}
+
+
+
 </script>
 
 <template>
   <el-menu class="layout-menu" collapse>
     <div>
       <el-menu-item index="1">
-        <el-icon><Location /></el-icon>
+        <el-icon @click="router.push('Home')">
+          <House />
+        </el-icon>
       </el-menu-item>
       <el-menu-item index="2">
-        <el-icon><icon-menu /></el-icon>
+        <el-icon>
+          <icon-menu />
+        </el-icon>
       </el-menu-item>
       <el-menu-item index="3" disabled>
-        <el-icon><Document /></el-icon>
+        <el-icon>
+          <Document />
+        </el-icon>
       </el-menu-item>
       <el-menu-item index="4">
-        <el-icon><Setting /></el-icon>
+        <el-icon>
+          <Setting />
+        </el-icon>
       </el-menu-item>
     </div>
-    <el-menu-item class="layout-menu-item-last" index="5">
-      <el-icon><Setting /></el-icon>
-    </el-menu-item>
+    <div>
+      <el-menu-item class="layout-menu-item-last" index="5">
+        <el-icon>
+          <User @click="toAuth"/>
+        </el-icon>
+      </el-menu-item>
+      <el-menu-item class="layout-menu-item-last" index="6">
+        <el-icon>
+          <Setting />
+        </el-icon>
+      </el-menu-item>
+    </div>
+
   </el-menu>
 </template>
 

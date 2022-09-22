@@ -7,13 +7,14 @@ import Research from "../pages/Research.vue";
 import Detail from "../pages/Detail.vue"
 import Upload from "../pages/Upload.vue"
 import Login from "../pages/Login.vue"
+import { nextTick } from "vue";
 
 //子路由组件
 const routeLogin = {
-    path: "/Login",
-    name: "Login",
-    component: Login,
-    props: true
+    // path: "/Login",
+    // name: "Login",
+    // component: Login,
+    // props: true
 }
 
 //配置路由区域
@@ -32,9 +33,7 @@ const routes = [
         path: "/Auth",
         component: Auth,
         props: true,
-        children: [
-            routeLogin 
-        ]
+
     },
     {
         path: "/Register/:userAccout?",
@@ -63,6 +62,12 @@ const routes = [
         props: true
     },
 
+    {
+        path: "/Login",
+        name: "Login",
+        component: Login,
+        props: true
+    },
     //重定向，默认进入主页
     {
         path: '/',
@@ -71,10 +76,22 @@ const routes = [
 ]
 
 
-
 //声明路由器并暴露
 export const router = createRouter({
     history: createWebHistory(),
     routes: routes
+})
+
+router.beforeEach((to, from, next)=>{
+    const pushLogin = ['/Auth']
+    console.log(to.path,from.path);
+    
+    if (!pushLogin.indexOf(to.path)) {        
+        console.log(11);        
+        if(!localStorage.getItem('token')) {      
+            next({name:'Login'})
+        }
+    }
+    next()
 })
 
