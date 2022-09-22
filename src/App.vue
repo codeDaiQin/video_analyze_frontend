@@ -4,22 +4,13 @@
 
 import Header from './components/Header.vue'
 import 'video.js/dist/video-js.css'
-import { onMounted } from 'vue';
-import { store } from './store';
-import { User } from "./interface/user";
-import { reqUser } from "./service/user";
-
-onMounted(async ()=>{
-  let res = await reqUser()
-  store.commit('setUser',res)
-})
 
 </script>
 
 <template>
-  <el-container> 
+  <el-container>
     <el-header height="80px">
-      <Header/>
+      <Header />
     </el-header>
     <el-container>
       <el-container>
