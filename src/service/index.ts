@@ -13,8 +13,8 @@ export const myRequest = Axios.create({
 //请求拦截，根据api接口自动添加前缀
 function urlHelper(url: string) {
   const authReg = new RegExp('\/login|\/register|\/code|\/forgetPassWord')
-  const videoReg = new RegExp('\/upload')
-  const userReg = new RegExp('\/getUserDetail')
+  const videoReg = new RegExp('\/upload') //new RegExp('\/upload')
+  const userReg = new RegExp('\/detail')
   // console.log(url);
   // const authArray = ['/login','/register','/code','/forgetPassWord']
   // const videoArray = ['/upload']
@@ -25,7 +25,7 @@ function urlHelper(url: string) {
     return "/auth" + url
   }
   else if (videoReg.test(url)) {
-    return "/video" + url
+    return url
   }
   else if (userReg.test(url)) {
     return "/user" + url

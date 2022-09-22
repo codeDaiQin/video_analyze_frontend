@@ -152,8 +152,8 @@ async function login() {
     if (testReg()) {
         if (user.password) {
             let res = await reqLogin({ email: user.email, password: user.password })
-            if (res.user) {
-                store.commit('setUser', res.user)
+            if (res.token) {
+                store.commit('setUser', res)
                 localStorage.setItem('token', res.token)
                 router.push('Auth')
             } else {
@@ -162,12 +162,12 @@ async function login() {
             }
         }
         if (user.code) {
-            let res = await reqLogin({ email: user.email, code: user.code, password: user.password })
+            let res = await reqLogin({ email: user.email, code: user.code})
             //本机运行版本为达成password非null值得code登录方式，需要拉取最新后端测试代码
-            if (res.user) {
-                store.commit('setUser', res.user)
+            if (res.token) {
+                store.commit('setUser', res)
                 localStorage.setItem('token', res.token)
-                router.push('Auth')           
+                router.push('Auth')
             } else {
                 emailErr.value = res
                 return false;
@@ -200,7 +200,6 @@ async function forget() {
     background-color: aquamarine;
     border: 1px solid black;
     margin: auto;
-    z-index: 999;
 
     .el-form-item {
         margin: 20px;

@@ -71,6 +71,7 @@ function goResearch() {
 
 watch(route, () => {
     showEntry.value = !(route.path.indexOf('Auth') === 1)
+    showExit.value = (route.path.indexOf('Auth') === 1)
 })
 
 
@@ -87,6 +88,8 @@ watch(route, () => {
     justify-content: space-between;
     border: 1px solid black;
     color: grey;
+    background-color: white;
+    opacity: 1;
 }
 
 .left-entry {

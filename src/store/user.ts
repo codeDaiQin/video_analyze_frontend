@@ -5,6 +5,8 @@ export const userVuex = {
         name: '',
         email: '',
         uid: '',
+        avater:'',
+        exp: 0,
     },
 
     action: {
@@ -16,11 +18,15 @@ export const userVuex = {
             state.user.name = result.name
             state.user.email = result.email
             state.user.uid = result.uid
+            state.user.avater = result.avater
+            state.user.exp = result.exp
         },
         removeUserInfo(state : State) {
             state.user.name = ''
             state.user.email = ''
             state.user.uid = ''
+            state.user.avater = ''
+            state.user.exp = 0
         }
     }, 
 } 

@@ -4,24 +4,39 @@
 
         </el-main>
         <el-aside class="userInfo">
-
+            <el-upload 
+                class="upload-demo" 
+                drag action="http://localhost:3000/api/v1/upload"  
+                :data="{ type: 'avatar'}"
+                :headers="header"
+                >    
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            </el-upload>
         </el-aside>
     </div>
     <router-view class="Login"></router-view>
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import { router } from '../router';
 import { store } from '../store';
+let header = reactive(
+    {
+        token:localStorage.getItem('token')
+    }
+)
 
-watch(()=>store.state.user,(newStore) => {
-    if(newStore) {
+
+
+watch(() => store.state.user, (newStore) => {
+    if (newStore) {
         router.push('Auth')
     }
 })
 
-onMounted(()=>{
+onMounted(() => {
     if (!localStorage.getItem('token')) {
         router.push('Login')
     }

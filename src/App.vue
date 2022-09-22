@@ -17,7 +17,7 @@ onMounted(async ()=>{
 </script>
 
 <template>
-  <el-container>
+  <el-container> 
     <el-header height="80px">
       <Header/>
     </el-header>
@@ -45,5 +45,9 @@ onMounted(async ()=>{
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+
+.el-header {
+
 }
 </style>
