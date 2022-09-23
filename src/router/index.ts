@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../pages/Home.vue";
 import Helloworld from "../components/Helloworld.vue";
 import Auth from "../pages/Auth.vue";
-import Register from "../pages/Register.vue";
+import userDetail from "../pages/userDetail.vue";
 import Research from "../pages/Research.vue";
 import Detail from "../pages/Detail.vue"
 import Upload from "../pages/Upload.vue"
@@ -10,11 +10,11 @@ import Login from "../pages/Login.vue"
 import { nextTick } from "vue";
 
 //子路由组件
-const routeLogin = {
-    // path: "/Login",
-    // name: "Login",
-    // component: Login,
-    // props: true
+const routeUserDetail =     {
+    path: "/userDetail/:userAccout?",
+    name: "userDetail",
+    component: userDetail,
+    props: true
 }
 
 //配置路由区域
@@ -33,14 +33,11 @@ const routes = [
         path: "/Auth",
         component: Auth,
         props: true,
+        children: [
+            routeUserDetail
+        ]
+    },
 
-    },
-    {
-        path: "/Register/:userAccout?",
-        name: "Register",
-        component: Register,
-        props: true
-    },
     {
         path: "/Research",
         name: "Research",

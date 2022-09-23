@@ -1,19 +1,30 @@
 <template>
     <div class="auth">
-        <el-main class="userDetail">
+        <el-header class="auth-header">
+            <div class="auth-header-userInfo">
+                <!-- 头像 -->
+                <el-avatar class="auth-header-avatar" size="large" @click="toEditDetail">user</el-avatar>
+                <div class="auth-header-textInfo">
+                    <div class="auth-header-userName">用户名 {{store.state.user.name}}</div>
+                    <div class="auth-header-exp">经验{{store.state.user.exp}}</div>
+                </div>
+            </div>
 
+            <div class="auth-header-userFavor">
+                <div class="auth-header-userFavorList">
+                    <div class="auth-header-collection">收藏</div>
+                    <div>|</div>
+                    <div class="auth-header-history">历史</div>
+                    <div>|</div>
+                    <div class="auth-header-favorite">关注</div>
+                    <div>|</div>
+                    <div class="auth-header-circle">动态</div>
+                </div>
+            </div>
+        </el-header>
+        <el-main class="userDetail">
+            <router-view></router-view>
         </el-main>
-        <el-aside class="userInfo">
-            <el-upload 
-                class="upload-demo" 
-                drag action="http://localhost:3000/api/v1/upload"  
-                :data="{ type: 'avatar'}"
-                :headers="header"
-                >    
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            </el-upload>
-        </el-aside>
     </div>
     <!-- <router-view class="Login"></router-view> -->
 </template>
@@ -22,12 +33,10 @@
 import { onMounted, reactive, ref, watch } from 'vue';
 import { router } from '../router';
 import { store } from '../store';
-let header = reactive(
-    {
-        token:localStorage.getItem('token')
-    }
-)
 
+function toEditDetail() {
+    router.push('userDetail')
+}
 
 
 watch(() => store.state.user, (newStore) => {
@@ -53,7 +62,7 @@ onMounted(() => {
     border-radius: 8px;
     border: 1px solid black;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     overflow: hidden;
 
@@ -80,5 +89,60 @@ onMounted(() => {
     display: flex;
     flex-wrap: wrap;
     z-index: 999;
+}
+
+.auth-header {
+    background-color: pink;
+    padding: 10px;
+    margin: 0px;
+    height: 120px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .auth-header-userInfo {
+        margin: auto;
+        margin-left: 32px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        .auth-header-textInfo {
+            margin: auto;
+            margin-left: 10px;
+            .auth-header-userName {
+                border-bottom: 3px solid brown;
+            }
+
+        }
+
+
+    }
+
+    .auth-header-userFavor {
+        flex: 1;
+        margin: auto;
+        margin-right: 32px;
+        display: flex;
+        flex-direction: row-reverse;
+
+        .auth-header-avatar:hover {
+            border: 5px skyblue;
+        }
+
+
+
+        .auth-header-userFavorList {
+            display: flex;
+            flex-direction: row-reverse;
+
+            div {
+                margin: 10px;
+            }
+
+        }
+    }
+
+
 }
 </style>
