@@ -1,19 +1,28 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../pages/Home.vue";
 import Helloworld from "../components/Helloworld.vue";
-import Auth from "../pages/Auth.vue";
+import Auth from "../pages/Auth/index.vue";
 import userDetail from "../pages/userDetail.vue";
-import Research from "../pages/Research.vue";
+import Search from "../pages/Search.vue";
 import Detail from "../pages/Detail.vue"
 import Upload from "../pages/Upload.vue"
 import Login from "../pages/Login.vue"
-import { nextTick } from "vue";
+import Components from "../pages/Auth/components/index.vue";
+import LeftSideMessage from "../pages/LeftSideMessage.vue"
+
 
 //子路由组件
 const routeUserDetail =     {
     path: "/userDetail/:userAccout?",
     name: "userDetail",
     component: userDetail,
+    props: true
+}
+
+const routeAuthComponents =     {
+    path: "/Components",
+    name: "Components",
+    component: Components,
     props: true
 }
 
@@ -32,16 +41,18 @@ const routes = [
         name: "Auth",
         path: "/Auth",
         component: Auth,
+        redirect: "/Components",
         props: true,
         children: [
-            routeUserDetail
+            routeUserDetail,
+            routeAuthComponents
         ]
     },
 
     {
-        path: "/Research",
-        name: "Research",
-        component: Research,
+        path: "/Search",
+        name: "Search",
+        component: Search,
         props: true
     },
 
@@ -63,6 +74,15 @@ const routes = [
         path: "/Login",
         name: "Login",
         component: Login,
+        props: true
+    },
+    {
+        path:'/LeftSideMessage',
+        name: "LeftSideMessage",
+        components: {
+            default: LeftSideMessage,
+            
+        },
         props: true
     },
     //重定向，默认进入主页

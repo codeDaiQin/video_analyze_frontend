@@ -44,6 +44,7 @@ import { useRoute } from 'vue-router';
 import { store } from "../store";
 import { UserInfo } from "../interface/auth";
 import { reqLogin, reqRegister, reqCode, reqforgetPassWord } from "../service/auth";
+import { router } from '../router';
 
 let route = useRoute()
 let emailErr = ref('')
@@ -137,6 +138,7 @@ async function login() {
             if (res.token) {
                 store.commit('setUser', res)
                 localStorage.setItem('token', res.token)
+                router.push('Auth')
             } else {
                 emailErr.value = res
                 return false;
@@ -148,6 +150,7 @@ async function login() {
         if (res.token) {
             store.commit('setUser', res)
             localStorage.setItem('token', res.token)
+            router.push('Auth')
         } else {
             emailErr.value = res
             return false;

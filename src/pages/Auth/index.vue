@@ -12,17 +12,16 @@
 
             <div class="auth-header-userFavor">
                 <div class="auth-header-userFavorList">
-                    <div class="auth-header-collection">收藏</div>
+                    <!--这里用echart会好一些 -->
+                    <div class="auth-header-focus">关注数</div>
                     <div>|</div>
-                    <div class="auth-header-history">历史</div>
+                    <div class="auth-header-fans">粉丝</div>
                     <div>|</div>
-                    <div class="auth-header-favorite">关注</div>
-                    <div>|</div>
-                    <div class="auth-header-circle">动态</div>
+                    <div class="auth-header-favor">点赞</div>
                 </div>
             </div>
         </el-header>
-        <el-main class="userDetail">
+        <el-main class="userDetail">            
             <router-view></router-view>
         </el-main>
     </div>
@@ -31,8 +30,8 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue';
-import { router } from '../router';
-import { store } from '../store';
+import { router } from '../../router';
+import { store } from '../../store';
 
 function toEditDetail() {
     router.push('userDetail')

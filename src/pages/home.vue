@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, Ref, ref, toRef } from 'vue';
+import { reactive, Ref, ref, toRef,inject } from 'vue';
 import { router } from '../router';
 import Card from '../pages/Card.vue'
 import videojs, { VideoJsPlayer } from 'video.js';
