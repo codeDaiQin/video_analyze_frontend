@@ -14,6 +14,7 @@
             <div class="video-prepics">
                 <div class="miniVideoContainer">
                     <video
+                        loop="true"
                         class="video-player" 
                         ref="videoPlayers" preload="auto"                        
                         type="video/mp4"
@@ -21,10 +22,15 @@
                         <source :src="recommendList[0].videoUrl">
                     </video>
                 </div>
-                <div
+                <!-- 这里是放关键帧的图片 -->
+                <!-- <div
                     v-if="item.cover"
                     class="video-prepics-cover" 
                     :style="{backgroundImage: 'url(' + item.cover + ')'}">
+                </div> -->
+                <div
+                    class="video-prepics-cover" 
+                    :style="{backgroundImage: 'url(/public/1.png)', opacity:item.opcity}">
                 </div>
             </div>
             <div class="video-Info">
@@ -44,7 +50,7 @@
 import { reactive, Ref, ref, toRef,inject, onMounted } from 'vue';
 import { router } from '../router';
 import { reqVideo  } from "../service/video";
-import { resTypeVideo} from "../interface/video";
+import { resTypeVideo, compounentTypeVideo} from "../interface/video";
 import Card from '../pages/Card.vue'
 import videojs, { VideoJsPlayer } from 'video.js';
 
@@ -54,6 +60,9 @@ let cards = ref(['1', '2'])
 let videoPlayers = ref(null)
 //单个播放器buff
 let videoPlayer = ref<VideoJsPlayer | null>(null)
+//设置一个播放器节流
+let timer : number = 0
+let insideTimer : number = 0
 
 
 function showDetail() {
@@ -113,30 +122,38 @@ const recommendList = reactive([
 
 
 //这里是请求后返回的视频信息
-let recommendList2   = reactive<resTypeVideo[]>([])
+let recommendList2  = reactive<compounentTypeVideo[]>([])
 
 //onmounted请求推荐视频
 
 onMounted(async ()=>{
 
     //这里还是写死的。！！~~~
-    let videoRecommendList = await reqVideo({pageSize:10 ,pageNum:1})
-    recommendList2 = videoRecommendList 
+    let videoRecommendList = await reqVideo({pageSize:10 ,pageNum:1}) 
+    recommendList2.push(...videoRecommendList)
+    recommendList2.forEach(element => {
+        element.opcity = 1    
+    });
 })
-
-
-
 
 // 用于用户鼠标悬停时播放器自动播放
 function playVideo(id: number) {
-    videoPlayer.value = videoPlayers.value![id-1] as VideoJsPlayer
-    videoPlayer.value.load()
-    videoPlayer.value.play()
+    insideTimer = setInterval(()=>{
+            recommendList2[id-1].opcity -= 0.1          
+        },100)
+    timer = setTimeout(()=>{
+        videoPlayer.value = videoPlayers.value![id-1] as VideoJsPlayer
+        videoPlayer.value.play()
+        clearInterval(insideTimer)
+    },1000) 
 }
 //鼠标离开时清除播放器
 function closeVideo(id: number) {
+    clearTimeout(timer)
+    clearInterval(insideTimer)
+    recommendList2[id-1].opcity = 1
     videoPlayer.value = videoPlayers.value![id-1] as VideoJsPlayer
-    videoPlayer.value.pause()
+    videoPlayer.value.load()
     videoPlayer = ref(null)
 }
 
@@ -164,7 +181,7 @@ function closeVideo(id: number) {
     .recommend-item-box {
         aspect-ratio: 1.2/1;
         border-radius: 10px;
-        border: 1px solid black;
+        border: transparent solid black;
         overflow: hidden;
 
         .video-prepics {

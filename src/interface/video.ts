@@ -22,10 +22,13 @@ export type resTypeVideo = {
     status: number,
     title: string,
     uid: string
-
-
 };
 
+export type expandTypeVideo = {
+    opcity: number
+};
+
+export type compounentTypeVideo = resTypeVideo & expandTypeVideo
 
 export type upLoadVideo = {
     name: string;
