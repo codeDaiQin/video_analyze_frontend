@@ -7,7 +7,7 @@
         </el-carousel>
         <div 
             class="recommend-item-box" 
-            v-for="item in recommendList" 
+            v-for="item in recommendList2" 
             @mouseleave="closeVideo(item.id)" 
             @mouseenter="playVideo(item.id)" 
             @click="showDetail">
@@ -18,18 +18,19 @@
                         ref="videoPlayers" preload="auto"                        
                         type="video/mp4"
                         muted>
-                        <source>
+                        <source :src="recommendList[0].videoUrl">
                     </video>
                 </div>
                 <div
-                    v-if="item.isCover"
+                    v-if="item.cover"
                     class="video-prepics-cover" 
-                    :style="{backgroundImage: 'url(' + item.poster + ')'}">
+                    :style="{backgroundImage: 'url(' + item.cover + ')'}">
                 </div>
             </div>
             <div class="video-Info">
-                <div class="title"><span>{{item.id}}</span></div>
-                <div class="number"><span>60</span></div>
+                <div class="title"><span>{{item.title}}</span></div>
+                <div class="title"><span>{{item.desc}}</span></div>
+                <div class="number"><span>{{item.status}}</span></div>
             </div>
         </div>
 
@@ -40,8 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, Ref, ref, toRef,inject } from 'vue';
+import { reactive, Ref, ref, toRef,inject, onMounted } from 'vue';
 import { router } from '../router';
+import { reqVideo  } from "../service/video";
+import { resTypeVideo} from "../interface/video";
 import Card from '../pages/Card.vue'
 import videojs, { VideoJsPlayer } from 'video.js';
 
@@ -109,24 +112,31 @@ const recommendList = reactive([
 ])
 
 
+//这里是请求后返回的视频信息
+let recommendList2   = reactive<resTypeVideo[]>([])
+
+//onmounted请求推荐视频
+
+onMounted(async ()=>{
+
+    //这里还是写死的。！！~~~
+    let videoRecommendList = await reqVideo({pageSize:10 ,pageNum:1})
+    recommendList2 = videoRecommendList 
+})
+
+
+
+
 // 用于用户鼠标悬停时播放器自动播放
 function playVideo(id: number) {
-    recommendList[id].isCover = false
-    videoPlayer.value = videojs(videoPlayers.value![id], {
-        aspectRatio: "16:9",
-        sources: [{
-            src: recommendList[id as any].videoUrl,
-        }],
-        width: 1,
-    })
+    videoPlayer.value = videoPlayers.value![id-1] as VideoJsPlayer
     videoPlayer.value.load()
     videoPlayer.value.play()
 }
 //鼠标离开时清除播放器
 function closeVideo(id: number) {
-    //清空buff
-    recommendList[id].isCover = true
-    videoPlayer.value?.pause()
+    videoPlayer.value = videoPlayers.value![id-1] as VideoJsPlayer
+    videoPlayer.value.pause()
     videoPlayer = ref(null)
 }
 

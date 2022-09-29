@@ -1,22 +1,15 @@
 import { myRequest} from ".";
-import { Video, upLoadVideo} from "../interface/video";
+import { reqTypeVideo,resTypeVideo} from "../interface/video";
 
 
-export const reqVideo = (config : Video) => {
-    let result = myRequest({
+export const reqVideo = async  (config: reqTypeVideo) => {
+    let result = await myRequest.request<resTypeVideo[],any>({
         url:"/video",
         method:'get',
         params:{
-            name : config.name
+            pageSize: config.pageSize,
+            pageNum: config.pageNum,
         }
     })
-    return result
-}
-
-export const reqUploadVideo = () => {
-    let result = myRequest({
-        url:"/upload",
-        method:'get',
-    })
-    return result
+    return result.data
 }

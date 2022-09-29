@@ -20,7 +20,6 @@ function urlHelper(url: string) {
   // const videoArray = ['/upload']
   // const userArray = ['/getUserDetail']
 
-
   if (authReg.test(url)) {
     return "/auth" + url
   }

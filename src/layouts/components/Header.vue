@@ -2,15 +2,16 @@
   <el-header class="layout-header">
     <el-menu mode="horizontal" class="layout-header-menu">
       <el-menu-item index="1">Processing Center</el-menu-item>
-        <el-menu-item index="2">Processing</el-menu-item>
-        <div class="layout-header-input">
-          <el-input></el-input>
-          <el-button class="layout-header-input-button" @click.prevent="goSearch">
-            <el-icon>
-              <Search />
-            </el-icon>
-          </el-button>
-        </div>
+      <el-menu-item index="2">Processing</el-menu-item>
+      <div class="layout-header-input">
+        <el-input></el-input>
+        <el-button class="layout-header-input-button" @click.prevent="goSearch">
+          <el-icon>
+            <Search />
+          </el-icon>
+        </el-button>
+      </div>
+      <el-menu-item index="3" @click="router.push('Upload')">Upload</el-menu-item>
     </el-menu>
 
   </el-header>
@@ -54,5 +55,4 @@ function goSearch() {
     }
   }
 }
-
 </style>

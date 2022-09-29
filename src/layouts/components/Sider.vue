@@ -11,7 +11,7 @@ import {
 import { inject } from "vue";
 import { router } from "../../router";
 
-const {displaySide, showSide} = inject('displaySide')
+// const {displaySide, showSide} = inject('displaySide')
 
 function toAuth() {
   router.push('Auth')
@@ -53,7 +53,7 @@ function toAuth() {
     <div>
       <el-menu-item class="layout-menu-item-last" index="6">
         <el-icon>
-          <ChatDotSquare @click="showSide"/>
+          <ChatDotSquare/>
         </el-icon>
       </el-menu-item>
       <el-menu-item class="layout-menu-item-last" index="7">

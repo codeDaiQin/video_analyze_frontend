@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed, inject, ref, watch, ComputedRef} from 'vue';
-let {displaySide, showSide} = inject('displaySide')
-let show : ComputedRef<boolean> = computed(()=>{
-    return displaySide as boolean
-})
+// let {displaySide, showSide} = inject('displaySide')
+// let show : ComputedRef<boolean> = computed(()=>{
+//     return displaySide as boolean
+// })
 
 </script>
     
 <template>
-    <el-container class="layout-container" v-if="!show">
+    <el-container class="layout-container" v-if="false">
         <el-aside class="layout-container-aside">
 
         </el-aside>
