@@ -1,7 +1,7 @@
 // 用户请求的基本信息
 export type UserInfo = {
     email: string;
-    password: string;
+    password: string | null;
     uid: string;
     code: string;//验证码
     name: string

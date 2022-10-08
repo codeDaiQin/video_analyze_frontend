@@ -1,8 +1,5 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 
-import Header from "./components/Header.vue";
 import "video.js/dist/video-js.css";
 import Layouts from "./layouts/index.vue";
 </script>
@@ -22,5 +19,9 @@ import Layouts from "./layouts/index.vue";
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+
+.el-header {
+
 }
 </style>

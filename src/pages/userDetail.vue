@@ -1,5 +1,17 @@
 <template>
     <div class="form">
+        <el-aside class="userInfo">
+            <el-upload 
+                class="upload-demo" 
+                drag action="http://localhost:3000/api/v1/upload" 
+                :data="{ type: 'avatar'}"
+                :on-change="handleChange"
+                :headers="header"
+                :auto-upload="true">
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            </el-upload>
+        </el-aside>
         <form action="" method="get" @click="eraseErr">
             <div>
                 <span>邮箱：</span>
@@ -45,6 +57,41 @@ import { useRoute } from 'vue-router';
 import { reqRegister, reqCode} from '../service/auth'
 import { UserInfo, UserRegisterRequest} from "../interface/auth";
 
+import { ElMessage, ElMessageBox } from 'element-plus'
+import type { UploadProps, UploadUserFile } from 'element-plus'
+
+const fileList = ref<UploadUserFile[]>([])
+
+
+const uploadFileByPices = (file: File)=>{
+    let name = file.name
+    let size = file.size
+    let shareSize = 1024*2
+    let numOfPics = Math.ceil(size/shareSize)
+    let picsIndex = 0
+    let start = picsIndex * shareSize
+    let end = (picsIndex + 1) * shareSize
+    let packet = file.slice(start,end)
+    console.log(packet);
+    let formData = new FormData()
+    formData.append('file',packet)
+    formData.append('fileName',name)
+    // formData.append('size',size)
+    // formData.append('picsIndex',picsIndex)
+    // formData.append('shareSize',shareSize)
+    // formData.append('numOfPics',numOfPics )
+    console.log(formData)
+}
+
+
+
+
+let header = reactive(
+    {
+        token: localStorage.getItem('token')
+    }
+)
+
 
 const route = useRoute()
 //限定userinfo的属性
@@ -67,6 +114,12 @@ let passwordConfirm = ref('')
 let alertMessage = ref('')
 let check = ref(false)
 let errInfo = ref('')
+
+//文件上传测试
+const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
+    uploadFileByPices(uploadFile.raw as File)
+  
+}
 
 //用户填写用户邮箱时进行检查用户名的注册情况（可注册/已注册/书写规范）
 function findUser() {

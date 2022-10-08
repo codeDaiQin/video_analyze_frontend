@@ -2,5 +2,7 @@
 export type User = {
     name: string;
     email: string;
-    uid: string
+    uid: string;
+    avater: string;
+    exp: number
 };

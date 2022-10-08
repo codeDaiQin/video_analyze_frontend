@@ -5,7 +5,7 @@ import { User } from "../interface/user";
 
 export const reqUser = () => {
     let result = myRequest({
-        url:"/getUserDetail",
+        url:"/detail",
         method:'get',
     })
     return result
